@@ -10,9 +10,7 @@
 		49111BF02C251938009D66F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49111BEF2C251938009D66F8 /* AppDelegate.swift */; };
 		49111BF22C251938009D66F8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49111BF12C251938009D66F8 /* SceneDelegate.swift */; };
 		49111BF42C251938009D66F8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49111BF32C251938009D66F8 /* ViewController.swift */; };
-		49111BF72C251938009D66F8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49111BF52C251938009D66F8 /* Main.storyboard */; };
 		49111BF92C251939009D66F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49111BF82C251939009D66F8 /* Assets.xcassets */; };
-		49111BFC2C251939009D66F8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49111BFA2C251939009D66F8 /* LaunchScreen.storyboard */; };
 		49111C072C25193A009D66F8 /* zozo_ios_engineer_codecheckTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49111C062C25193A009D66F8 /* zozo_ios_engineer_codecheckTests.swift */; };
 		49111C112C25193A009D66F8 /* zozo_ios_engineer_codecheckUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49111C102C25193A009D66F8 /* zozo_ios_engineer_codecheckUITests.swift */; };
 		49111C132C25193A009D66F8 /* zozo_ios_engineer_codecheckUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49111C122C25193A009D66F8 /* zozo_ios_engineer_codecheckUITestsLaunchTests.swift */; };
@@ -40,9 +38,7 @@
 		49111BEF2C251938009D66F8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		49111BF12C251938009D66F8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		49111BF32C251938009D66F8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		49111BF62C251938009D66F8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		49111BF82C251939009D66F8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		49111BFB2C251939009D66F8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		49111BFD2C251939009D66F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		49111C022C25193A009D66F8 /* zozo-ios-engineer-codecheckTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "zozo-ios-engineer-codecheckTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49111C062C25193A009D66F8 /* zozo_ios_engineer_codecheckTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = zozo_ios_engineer_codecheckTests.swift; sourceTree = "<group>"; };
@@ -102,9 +98,7 @@
 				49111BEF2C251938009D66F8 /* AppDelegate.swift */,
 				49111BF12C251938009D66F8 /* SceneDelegate.swift */,
 				49111BF32C251938009D66F8 /* ViewController.swift */,
-				49111BF52C251938009D66F8 /* Main.storyboard */,
 				49111BF82C251939009D66F8 /* Assets.xcassets */,
-				49111BFA2C251939009D66F8 /* LaunchScreen.storyboard */,
 				49111BFD2C251939009D66F8 /* Info.plist */,
 			);
 			path = "zozo-ios-engineer-codecheck";
@@ -231,9 +225,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49111BFC2C251939009D66F8 /* LaunchScreen.storyboard in Resources */,
 				49111BF92C251939009D66F8 /* Assets.xcassets in Resources */,
-				49111BF72C251938009D66F8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,25 +287,6 @@
 			targetProxy = 49111C0D2C25193A009D66F8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		49111BF52C251938009D66F8 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				49111BF62C251938009D66F8 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		49111BFA2C251939009D66F8 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				49111BFB2C251939009D66F8 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		49111C142C25193A009D66F8 /* Debug */ = {
@@ -447,7 +420,6 @@
 				INFOPLIST_FILE = "zozo-ios-engineer-codecheck/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -475,7 +447,6 @@
 				INFOPLIST_FILE = "zozo-ios-engineer-codecheck/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
