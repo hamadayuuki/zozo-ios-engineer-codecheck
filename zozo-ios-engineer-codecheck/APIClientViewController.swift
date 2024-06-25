@@ -6,13 +6,16 @@
 //
 
 import UIKit
+import Combine
 
 class APIClientViewController: UIViewController {
+    private let viewModel: APIClientViewModel = .init()
+    private var cancellables = Set<AnyCancellable>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .gray
+        view.backgroundColor = .white
         addSubViews()
         setupLayout()
         setupBinding()
@@ -46,9 +49,20 @@ class APIClientViewController: UIViewController {
 
     private func setupBinding() {
         getButton.addTarget(self, action: #selector(getButtonTapped), for: .touchUpInside)
+
+        viewModel.$isLoading
+            .receive(on: DispatchQueue.main)   // メインスレッドで実行
+            .sink { [weak self] isLoading in   // 循環参照を防ぐ
+                if(isLoading) {
+                    self?.view.backgroundColor = .gray
+                } else {
+                    self?.view.backgroundColor = .white
+                }
+            }
+            .store(in: &cancellables)
     }
 
     @objc private func getButtonTapped() {
-        print(#function)
+        viewModel.tappedGetButton()
     }
 }
