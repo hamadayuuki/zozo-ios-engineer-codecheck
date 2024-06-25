@@ -16,7 +16,7 @@ private protocol APIClientViewModelInputOutput {
 }
 
 final class APIClientViewModel: APIClientViewModelInput, APIClientViewModelInputOutput {
-    
+
     // MARK: - outputs
 
     @Published private(set) var isLoading = false

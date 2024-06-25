@@ -36,6 +36,13 @@ class APIClientViewController: UIViewController {
     // MARK: - function
 
     private func addSubViews() {
+        getButton.addAction(
+            .init { [weak self] _ in
+                self?.getButtonTapped()
+            },
+            for: .touchUpInside
+        )
+
         view.addSubview(getButton)
     }
 
@@ -48,8 +55,6 @@ class APIClientViewController: UIViewController {
     }
 
     private func setupBinding() {
-        getButton.addTarget(self, action: #selector(getButtonTapped), for: .touchUpInside)
-
         viewModel.$isLoading
             .receive(on: DispatchQueue.main)   // メインスレッドで実行
             .sink { [weak self] isLoading in   // 循環参照を防ぐ
@@ -62,7 +67,7 @@ class APIClientViewController: UIViewController {
             .store(in: &cancellables)
     }
 
-    @objc private func getButtonTapped() {
+    private func getButtonTapped() {
         viewModel.tappedGetButton()
     }
 }
