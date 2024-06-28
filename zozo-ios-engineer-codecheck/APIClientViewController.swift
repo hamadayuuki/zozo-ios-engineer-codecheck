@@ -21,8 +21,7 @@ class APIClientViewController: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = .white
-        addSubViews()
-        setupLayout()
+        configureViews()
         setupBinding()
     }
 
@@ -46,11 +45,9 @@ class APIClientViewController: UIViewController {
 
     // MARK: - function
 
-    private func addSubViews() {
+    private func configureViews() {
         view.addSubview(getButton)
-    }
 
-    private func setupLayout() {
         getButton.translatesAutoresizingMaskIntoConstraints = false
         getButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         getButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
