@@ -57,11 +57,7 @@ class APIClientViewController: UIViewController {
         viewModel.$isLoading
             .receive(on: DispatchQueue.main)   // メインスレッドで実行
             .sink { [weak self] isLoading in   // 循環参照を防ぐ
-                if(isLoading) {
-                    self?.view.backgroundColor = .gray
-                } else {
-                    self?.view.backgroundColor = .white
-                }
+                self?.view.backgroundColor = isLoading ? .gray : .white
             }
             .store(in: &cancellables)
     }
