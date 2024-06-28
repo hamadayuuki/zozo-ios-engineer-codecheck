@@ -9,8 +9,13 @@ import UIKit
 import Combine
 
 class APIClientViewController: UIViewController {
-    private let viewModel: APIClientViewModel = .init()
+    private let viewModel: APIClientViewModel
     private var cancellables = Set<AnyCancellable>()
+
+    init(viewModel: APIClientViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,4 +70,6 @@ class APIClientViewController: UIViewController {
     private func getButtonTapped() {
         viewModel.tappedGetButton()
     }
+
+    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }

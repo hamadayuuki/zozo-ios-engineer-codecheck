@@ -7,15 +7,18 @@
 
 import Foundation
 
-private protocol APIClientViewModelInput {
+// アクセスレベルは他のファイルから呼び出せるように設定
+protocol APIClientViewModelInput {
     func tappedGetButton()
 }
 
-private protocol APIClientViewModelInputOutput {
+protocol APIClientViewModelInputOutput {
     var isLoading: Bool { get }   // 外部からsetされない想定なのでgetterのみ
 }
 
-final class APIClientViewModel: APIClientViewModelInput, APIClientViewModelInputOutput {
+protocol APIClientViewModelProtocol: APIClientViewModelInput, APIClientViewModelInputOutput {}
+
+final class APIClientViewModel: APIClientViewModelProtocol {
 
     // MARK: - outputs
 
