@@ -23,26 +23,25 @@ class APIClientViewController: UIViewController {
 
     // MARK: - UI compornents
 
-    private var getButton: UIButton = {
+    private lazy var getButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .systemBlue
         button.layer.cornerRadius = 24
         button.setTitle("GET", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 24, weight: .regular)
         button.setTitleColor(.white, for: .normal)
+        button.addAction(
+            .init { [weak self] _ in
+                self?.getButtonTapped()
+            },
+            for: .touchUpInside
+        )
         return button
     }()
 
     // MARK: - function
 
     private func addSubViews() {
-        getButton.addAction(
-            .init { [weak self] _ in
-                self?.getButtonTapped()
-            },
-            for: .touchUpInside
-        )
-
         view.addSubview(getButton)
     }
 
