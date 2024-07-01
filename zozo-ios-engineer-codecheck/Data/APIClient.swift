@@ -8,7 +8,7 @@
 import Foundation
 
 protocol APIClientProtocol {
-    func request<D: Decodable>(apiRequest: any APIRequest) async throws -> Result<D, HTTPError>
+    func request<D: Decodable>(apiRequest: any APIRequestProtocol) async throws -> Result<D, HTTPError>
 }
 
 class APIClient: APIClientProtocol {
@@ -30,7 +30,7 @@ class APIClient: APIClientProtocol {
     ///    let response: Result<SearchRepositoryResponse, HTTPError> = try await apiClient.request(apiRequest: apiRequest)
     /// }
     /// ```
-    func request<D: Decodable>(apiRequest: any APIRequest) async throws -> Result<D, HTTPError> {
+    func request<D: Decodable>(apiRequest: any APIRequestProtocol) async throws -> Result<D, HTTPError> {
         let request = apiRequest.buildURLRequest()
         let (data, response) = try await URLSession.shared.data(for: request)
         guard let httpStatus = response as? HTTPURLResponse else {

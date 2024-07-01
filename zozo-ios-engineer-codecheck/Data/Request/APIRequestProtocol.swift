@@ -1,5 +1,5 @@
 //
-//  APIRequest.swift
+//  APIRequestProtocol.swift
 //  zozo-ios-engineer-codecheck
 //
 //  Created by yuki.hamada on 2024/06/28.
@@ -8,7 +8,7 @@
 import Foundation
 
 /// APIリクエスト時のパラメータ
-protocol APIRequest {
+protocol APIRequestProtocol {
     associatedtype Response: Decodable
 
     var baseURL: URL { get }
@@ -20,7 +20,7 @@ protocol APIRequest {
 
 // MARK: - extension
 
-extension APIRequest {
+extension APIRequestProtocol {
     func buildURLRequest() -> URLRequest {
         let url = baseURL.appendingPathComponent(path)
         var components = URLComponents(url: url, resolvingAgainstBaseURL: true)

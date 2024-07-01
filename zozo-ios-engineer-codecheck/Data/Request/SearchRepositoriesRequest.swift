@@ -12,7 +12,7 @@ import Foundation
 /// ```
 /// let request = GIthubAPI.SearchRepository(searchWord: "swift")
 /// ```
-struct SearchRepositoriesRequest: APIRequest {
+struct SearchRepositoriesRequest: APIRequestProtocol {
     let searchWord: String
 
     init(searchWord: String) {
@@ -21,7 +21,7 @@ struct SearchRepositoriesRequest: APIRequest {
 
     typealias Response = SearchRepositoriesResponse
 
-    // MARK: - APIRequest
+    // MARK: - APIRequestProtocol
 
     var baseURL: URL {
         guard let baseURL = URL(string: "https://api.github.com") else { fatalError("error baseURL") }
