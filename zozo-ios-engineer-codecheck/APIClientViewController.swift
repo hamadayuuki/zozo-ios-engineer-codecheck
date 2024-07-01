@@ -25,7 +25,7 @@ class APIClientViewController: UIViewController {
         setupBinding()
     }
 
-    // MARK: - UI compornents
+    // MARK: - UI components
 
     private lazy var getButton: UIButton = {
         let button = UIButton()
