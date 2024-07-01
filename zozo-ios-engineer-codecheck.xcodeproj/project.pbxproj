@@ -15,6 +15,12 @@
 		49111C132C25193A009D66F8 /* zozo_ios_engineer_codecheckUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49111C122C25193A009D66F8 /* zozo_ios_engineer_codecheckUITestsLaunchTests.swift */; };
 		49CD8F4E2C2A5F5700E78E9E /* APIClientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CD8F4D2C2A5F5700E78E9E /* APIClientViewController.swift */; };
 		49CD8F502C2A719500E78E9E /* APIClientViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CD8F4F2C2A719500E78E9E /* APIClientViewModel.swift */; };
+		49CD8F532C2E4BF100E78E9E /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CD8F522C2E4BF100E78E9E /* HTTPMethod.swift */; };
+		49CD8F552C2E4C4F00E78E9E /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CD8F542C2E4C4F00E78E9E /* APIRequest.swift */; };
+		49CD8F572C2E573700E78E9E /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CD8F562C2E573700E78E9E /* APIClient.swift */; };
+		49CD8F592C2E581500E78E9E /* HTTPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CD8F582C2E581500E78E9E /* HTTPError.swift */; };
+		49CD8F5B2C2E83CC00E78E9E /* SearchRepositoriesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CD8F5A2C2E83CC00E78E9E /* SearchRepositoriesRequest.swift */; };
+		49CD8F5D2C2E83FE00E78E9E /* SearchRepositoriesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CD8F5C2C2E83FE00E78E9E /* SearchRepositoriesResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +53,12 @@
 		49111C122C25193A009D66F8 /* zozo_ios_engineer_codecheckUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = zozo_ios_engineer_codecheckUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		49CD8F4D2C2A5F5700E78E9E /* APIClientViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientViewController.swift; sourceTree = "<group>"; };
 		49CD8F4F2C2A719500E78E9E /* APIClientViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientViewModel.swift; sourceTree = "<group>"; };
+		49CD8F522C2E4BF100E78E9E /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
+		49CD8F542C2E4C4F00E78E9E /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
+		49CD8F562C2E573700E78E9E /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		49CD8F582C2E581500E78E9E /* HTTPError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPError.swift; sourceTree = "<group>"; };
+		49CD8F5A2C2E83CC00E78E9E /* SearchRepositoriesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepositoriesRequest.swift; sourceTree = "<group>"; };
+		49CD8F5C2C2E83FE00E78E9E /* SearchRepositoriesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepositoriesResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +109,7 @@
 		49111BEE2C251938009D66F8 /* zozo-ios-engineer-codecheck */ = {
 			isa = PBXGroup;
 			children = (
+				49CD8F512C2E4B4300E78E9E /* Data */,
 				49111BEF2C251938009D66F8 /* AppDelegate.swift */,
 				49111BF12C251938009D66F8 /* SceneDelegate.swift */,
 				49CD8F4D2C2A5F5700E78E9E /* APIClientViewController.swift */,
@@ -122,6 +135,35 @@
 				49111C122C25193A009D66F8 /* zozo_ios_engineer_codecheckUITestsLaunchTests.swift */,
 			);
 			path = "zozo-ios-engineer-codecheckUITests";
+			sourceTree = "<group>";
+		};
+		49CD8F512C2E4B4300E78E9E /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				49CD8F5F2C31BA7300E78E9E /* Request */,
+				49CD8F5E2C31BA6B00E78E9E /* Response */,
+				49CD8F522C2E4BF100E78E9E /* HTTPMethod.swift */,
+				49CD8F562C2E573700E78E9E /* APIClient.swift */,
+				49CD8F582C2E581500E78E9E /* HTTPError.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		49CD8F5E2C31BA6B00E78E9E /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				49CD8F5C2C2E83FE00E78E9E /* SearchRepositoriesResponse.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		49CD8F5F2C31BA7300E78E9E /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				49CD8F542C2E4C4F00E78E9E /* APIRequest.swift */,
+				49CD8F5A2C2E83CC00E78E9E /* SearchRepositoriesRequest.swift */,
+			);
+			path = Request;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -277,8 +319,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				49CD8F502C2A719500E78E9E /* APIClientViewModel.swift in Sources */,
+				49CD8F5B2C2E83CC00E78E9E /* SearchRepositoriesRequest.swift in Sources */,
+				49CD8F572C2E573700E78E9E /* APIClient.swift in Sources */,
+				49CD8F592C2E581500E78E9E /* HTTPError.swift in Sources */,
+				49CD8F5D2C2E83FE00E78E9E /* SearchRepositoriesResponse.swift in Sources */,
 				49CD8F4E2C2A5F5700E78E9E /* APIClientViewController.swift in Sources */,
 				49111BF02C251938009D66F8 /* AppDelegate.swift in Sources */,
+				49CD8F532C2E4BF100E78E9E /* HTTPMethod.swift in Sources */,
+				49CD8F552C2E4C4F00E78E9E /* APIRequest.swift in Sources */,
 				49111BF22C251938009D66F8 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
