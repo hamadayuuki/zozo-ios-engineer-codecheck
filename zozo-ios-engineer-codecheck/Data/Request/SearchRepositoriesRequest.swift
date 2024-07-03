@@ -28,17 +28,9 @@ struct SearchRepositoriesRequest: APIRequestProtocol {
         return baseURL
     }
 
-    var path: String {
-        "/search/repositories"
-    }
-
-    var method: HTTPMethod {
-        .get
-    }
-
-    var body: Data? {
-        nil
-    }
+    var path: String = "/search/repositories"
+    var method: HTTPMethod = .get
+    var body: Data?
 
     var urlQueryItem: URLQueryItem {
         URLQueryItem(name: "q", value: searchWord)
