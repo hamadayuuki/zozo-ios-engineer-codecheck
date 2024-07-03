@@ -1,5 +1,5 @@
 //
-//  APIClientViewModel.swift
+//  SearchRepositoryViewModel.swift
 //  zozo-ios-engineer-codecheck
 //
 //  Created by yuki.hamada on 2024/06/25.
@@ -8,17 +8,17 @@
 import Foundation
 
 // アクセスレベルは他のファイルから呼び出せるように設定
-protocol APIClientViewModelInput {
+protocol SearchRepositoryViewModelInput {
     func tappedGetButton()
 }
 
-protocol APIClientViewModelInputOutput {
+protocol SearchRepositoryViewModelInputOutput {
     var isLoading: Bool { get }   // 外部からsetされない想定なのでgetterのみ
 }
 
-protocol APIClientViewModelProtocol: APIClientViewModelInput, APIClientViewModelInputOutput {}
+protocol SearchRepositoryViewModelProtocol: SearchRepositoryViewModelInput, SearchRepositoryViewModelInputOutput {}
 
-final class APIClientViewModel: APIClientViewModelProtocol {
+final class SearchRepositoryViewModel: SearchRepositoryViewModelProtocol {
 
     // MARK: - outputs
 

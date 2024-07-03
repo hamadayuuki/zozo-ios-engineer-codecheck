@@ -1,5 +1,5 @@
 //
-//  APIClientViewController.swift
+//  SearchRepositoryViewController.swift
 //  zozo-ios-engineer-codecheck
 //
 //  Created by yuki.hamada on 2024/06/25.
@@ -8,11 +8,11 @@
 import UIKit
 import Combine
 
-class APIClientViewController: UIViewController {
-    private let viewModel: APIClientViewModel
+class SearchRepositoryViewController: UIViewController {
+    private let viewModel: SearchRepositoryViewModel
     private var cancellables = Set<AnyCancellable>()
 
-    init(viewModel: APIClientViewModel) {
+    init(viewModel: SearchRepositoryViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
