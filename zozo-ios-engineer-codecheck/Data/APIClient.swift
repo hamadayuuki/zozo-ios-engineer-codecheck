@@ -12,7 +12,7 @@ protocol APIClientProtocol {
 }
 
 class APIClient: APIClientProtocol {
-    /// APIから所得したJSONを変換するためのDecoder
+    /// APIから取得したJSONを変換するためのDecoder
     ///
     /// `total_count -> totalCount`
     private static var decoder: JSONDecoder {
