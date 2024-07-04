@@ -27,32 +27,27 @@ class SearchRepositoryViewController: UIViewController {
 
     // MARK: - UI compornents
 
-    private lazy var getButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .systemBlue
-        button.layer.cornerRadius = 24
-        button.setTitle("GET", for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 24, weight: .regular)
-        button.setTitleColor(.white, for: .normal)
-        button.addAction(
-            .init { [weak self] _ in
-                self?.getButtonTapped()
-            },
-            for: .touchUpInside
-        )
-        return button
+    private lazy var collectionView: UICollectionView = {
+        let collectionView: UICollectionView = .init(frame: .zero, collectionViewLayout: .init())
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(RepositoryViewCell.self, forCellWithReuseIdentifier: String(describing: RepositoryViewCell.self))
+        return collectionView
     }()
 
     // MARK: - function
 
     private func configureViews() {
-        view.addSubview(getButton)
+        /// Items layout
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.itemSize = CGSize(
+            width: self.view.frame.width - 30,
+            height: RepositoryViewCell.cellHeight
+        )
 
-        getButton.translatesAutoresizingMaskIntoConstraints = false
-        getButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        getButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        getButton.heightAnchor.constraint(equalToConstant: 150).isActive = true
-        getButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        collectionView.collectionViewLayout = flowLayout
+        collectionView.frame = self.view.frame
+        self.view.addSubview(collectionView)
     }
 
     private func setupBinding() {
@@ -69,4 +64,18 @@ class SearchRepositoryViewController: UIViewController {
     }
 
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+}
+
+// MARK: - UICollectionViewDataSource
+
+extension SearchRepositoryViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        10
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: RepositoryViewCell.self), for: indexPath)
+        cell.backgroundColor = .gray
+        return cell
+    }
 }
