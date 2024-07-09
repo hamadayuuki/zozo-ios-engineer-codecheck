@@ -53,20 +53,21 @@ class SearchRepositoryViewController: UIViewController {
     }
 
     private func setupBinding() {
-        viewModel.$isLoading
-            .receive(on: DispatchQueue.main)   // メインスレッドで実行
-            .sink { [weak self] isLoading in   // 循環参照を防ぐ
-                self?.view.backgroundColor = isLoading ? .gray : .white
-            }
-            .store(in: &cancellables)
-
-        viewModel.$repositories
-            .dropFirst()   // 初期値設定分の通知を無視
+        viewModel.$state
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] repos in
+            .sink { [weak self] state in
                 guard let self else { return }
-                self.repository = repos
-                self.collectionView.reloadData()
+                switch state {
+                case .initial, .loading:
+                    // TODO: - ローディング画面
+                    break
+                case .success(let repositories):
+                    self.repository = repositories
+                    self.collectionView.reloadData()
+                case .error(let errorDescription):
+                    print(errorDescription)
+                    // TODO: - エラー画面
+                }
             }
             .store(in: &cancellables)
     }

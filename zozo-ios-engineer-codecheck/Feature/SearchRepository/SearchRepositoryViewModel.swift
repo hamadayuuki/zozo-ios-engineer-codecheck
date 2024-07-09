@@ -13,40 +13,42 @@ protocol SearchRepositoryViewModelInput {
 }
 
 protocol SearchRepositoryViewModelInputOutput {
-    var isLoading: Bool { get }   // 外部からsetされない想定なのでgetterのみ
-    var isError: Bool { get }
-    var repositories: SearchRepositoriesResponse { get }
+    var state: SearchRepositoryViewModel.State { get }
 }
 
 protocol SearchRepositoryViewModelProtocol: SearchRepositoryViewModelInput, SearchRepositoryViewModelInputOutput {}
 
 final class SearchRepositoryViewModel: SearchRepositoryViewModelProtocol {
+    enum State {
+        case initial   // init だと競合
+        case loading
+        case success(SearchRepositoriesResponse)
+        case error(String)
+    }
+
     private let apiClient: APIClient = .init()
 
     // MARK: - outputs
 
-    // TODO: - 状態をenumで一元管理する
-    @Published private(set) var isLoading = false
-    @Published private(set) var isError = false
-    @Published private(set) var repositories: SearchRepositoriesResponse = .init(items: [])
+    @Published private(set) var state: State = .initial
 
     // MARK: - inputs
 
     @MainActor
     func tappedGetButton(searchWord: String) async throws {
-        isLoading = true
+        state = .loading
         let searchRepoRequest: SearchRepositoriesRequest = .init(searchWord: searchWord)
         do {
             let response: Result<SearchRepositoriesResponse, HTTPError> = try await apiClient.request(apiRequest: searchRepoRequest)
             switch response {
             case .success(let repositories):
-                self.repositories = repositories
+                state = .success(repositories)
             case .failure(let error):
-                isError = true
+                let errorDescription = error.errorDescription
+                state = .error(errorDescription)
             }
         } catch {
-            isError = true
+            state = .error(error.localizedDescription)
         }
-        isLoading = false
     }
 }
