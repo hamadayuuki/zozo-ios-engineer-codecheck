@@ -8,6 +8,17 @@
 import UIKit
 
 class RepositoryViewCell: UICollectionViewCell {
+    /// RepositoryViewCell の状態管理用
+    ///
+    /// 名前空間を考慮している。
+    /// 使う時には `RepositoryViewCell.State` とする
+    struct State {
+        let repoName: String
+        let repoDescription: String
+        let stargazersCount: Int
+        let language: String
+    }
+
     static let cellHeight: CGFloat = 150
 
     // TODO: - SnapKit 用いてレイアウト実装する
@@ -40,5 +51,12 @@ class RepositoryViewCell: UICollectionViewCell {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func setState(state: State) {
+        self.repoName.text = state.repoName
+        self.repoDescription.text = state.repoDescription
+        self.stargazersCount.text = "\(state.stargazersCount)"
+        self.language.text = state.language
     }
 }

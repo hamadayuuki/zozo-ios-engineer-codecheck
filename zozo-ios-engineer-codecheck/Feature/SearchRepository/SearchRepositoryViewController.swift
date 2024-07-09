@@ -9,6 +9,7 @@ import UIKit
 import Combine
 
 class SearchRepositoryViewController: UIViewController {
+    private var repository: SearchRepositoriesResponse = .init(items: [])   // TODO: 削除, VMで状態管理する
     private let viewModel: SearchRepositoryViewModel
     private var cancellables = Set<AnyCancellable>()
 
@@ -23,6 +24,7 @@ class SearchRepositoryViewController: UIViewController {
         view.backgroundColor = .white
         configureViews()
         setupBinding()
+        getButtonTapped()
     }
 
     // MARK: - UI compornents
@@ -57,10 +59,22 @@ class SearchRepositoryViewController: UIViewController {
                 self?.view.backgroundColor = isLoading ? .gray : .white
             }
             .store(in: &cancellables)
+
+        viewModel.$repositories
+            .dropFirst()   // 初期値設定分の通知を無視
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] repos in
+                guard let self else { return }
+                self.repository = repos
+                self.collectionView.reloadData()
+            }
+            .store(in: &cancellables)
     }
 
     private func getButtonTapped() {
-        viewModel.tappedGetButton()
+        Task {
+            try await viewModel.tappedGetButton(searchWord: "Swift")
+        }
     }
 
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
@@ -70,11 +84,20 @@ class SearchRepositoryViewController: UIViewController {
 
 extension SearchRepositoryViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
+        repository.items.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: RepositoryViewCell.self), for: indexPath)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: RepositoryViewCell.self), for: indexPath) as? RepositoryViewCell else { fatalError("Unable to dequeue CustomCollectionViewCell") }
+        // TODO: - DiffableDataSourceへ置き換え
+        let item = repository.items[indexPath.item]
+        let cellState: RepositoryViewCell.State = .init(
+            repoName: item.fullName,
+            repoDescription: item.description,
+            stargazersCount: item.stargazersCount,
+            language: item.language
+        )
+        cell.setState(state: cellState)
         cell.backgroundColor = .gray
         return cell
     }

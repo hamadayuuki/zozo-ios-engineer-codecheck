@@ -15,7 +15,7 @@ struct GithubRepository: Decodable {
     var fullName: String
     var htmlUrl: String
     var description: String
-    var language: String?
+    var language: String
     var stargazersCount: Int
     var watchersCount: Int
     var createdAt: String
