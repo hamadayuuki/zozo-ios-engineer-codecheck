@@ -19,14 +19,18 @@ protocol SearchRepositoryViewModelInputOutput {
 protocol SearchRepositoryViewModelProtocol: SearchRepositoryViewModelInput, SearchRepositoryViewModelInputOutput {}
 
 final class SearchRepositoryViewModel: SearchRepositoryViewModelProtocol {
-    enum State {
+    enum State: Equatable {
         case initial   // init だと競合
         case loading
         case success(SearchRepositoriesResponse)
         case error(String)
     }
 
-    private let apiClient: APIClient = .init()
+    private(set) var apiClient: APIClientProtocol
+
+    init(apiClient: APIClientProtocol) {
+        self.apiClient = apiClient
+    }
 
     // MARK: - outputs
 

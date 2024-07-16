@@ -3,14 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		49111BF02C251938009D66F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49111BEF2C251938009D66F8 /* AppDelegate.swift */; };
 		49111BF22C251938009D66F8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49111BF12C251938009D66F8 /* SceneDelegate.swift */; };
 		49111BF92C251939009D66F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49111BF82C251939009D66F8 /* Assets.xcassets */; };
-		49111C072C25193A009D66F8 /* zozo_ios_engineer_codecheckTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49111C062C25193A009D66F8 /* zozo_ios_engineer_codecheckTests.swift */; };
+		49111C072C25193A009D66F8 /* SearchRepositoryViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49111C062C25193A009D66F8 /* SearchRepositoryViewModelTest.swift */; };
 		49111C112C25193A009D66F8 /* zozo_ios_engineer_codecheckUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49111C102C25193A009D66F8 /* zozo_ios_engineer_codecheckUITests.swift */; };
 		49111C132C25193A009D66F8 /* zozo_ios_engineer_codecheckUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49111C122C25193A009D66F8 /* zozo_ios_engineer_codecheckUITestsLaunchTests.swift */; };
 		49CD8F4E2C2A5F5700E78E9E /* SearchRepositoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CD8F4D2C2A5F5700E78E9E /* SearchRepositoryViewController.swift */; };
@@ -50,7 +50,7 @@
 		49111BF82C251939009D66F8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		49111BFD2C251939009D66F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		49111C022C25193A009D66F8 /* zozo-ios-engineer-codecheckTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "zozo-ios-engineer-codecheckTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		49111C062C25193A009D66F8 /* zozo_ios_engineer_codecheckTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = zozo_ios_engineer_codecheckTests.swift; sourceTree = "<group>"; };
+		49111C062C25193A009D66F8 /* SearchRepositoryViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepositoryViewModelTest.swift; sourceTree = "<group>"; };
 		49111C0C2C25193A009D66F8 /* zozo-ios-engineer-codecheckUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "zozo-ios-engineer-codecheckUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49111C102C25193A009D66F8 /* zozo_ios_engineer_codecheckUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = zozo_ios_engineer_codecheckUITests.swift; sourceTree = "<group>"; };
 		49111C122C25193A009D66F8 /* zozo_ios_engineer_codecheckUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = zozo_ios_engineer_codecheckUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -128,7 +128,7 @@
 		49111C052C25193A009D66F8 /* zozo-ios-engineer-codecheckTests */ = {
 			isa = PBXGroup;
 			children = (
-				49111C062C25193A009D66F8 /* zozo_ios_engineer_codecheckTests.swift */,
+				49111C062C25193A009D66F8 /* SearchRepositoryViewModelTest.swift */,
 			);
 			path = "zozo-ios-engineer-codecheckTests";
 			sourceTree = "<group>";
@@ -274,7 +274,7 @@
 				};
 			};
 			buildConfigurationList = 49111BE72C251938009D66F8 /* Build configuration list for PBXProject "zozo-ios-engineer-codecheck" */;
-			compatibilityVersion = "Xcode 14.0";
+			compatibilityVersion = "Xcode 15.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -366,7 +366,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49111C072C25193A009D66F8 /* zozo_ios_engineer_codecheckTests.swift in Sources */,
+				49111C072C25193A009D66F8 /* SearchRepositoryViewModelTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -447,7 +447,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -504,7 +504,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
