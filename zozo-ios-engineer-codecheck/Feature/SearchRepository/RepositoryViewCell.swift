@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class RepositoryViewCell: UICollectionViewCell {
     /// RepositoryViewCell の状態管理用
@@ -23,10 +24,30 @@ class RepositoryViewCell: UICollectionViewCell {
 
     // TODO: - SnapKit 用いてレイアウト実装する
     // https://github.com/SnapKit/SnapKit
-    private let repoName: UILabel = .init(frame: .init(x: 0, y: 0, width: 100, height: 30))
-    private let repoDescription: UILabel = .init(frame: .init(x: 0, y: 30, width: 100, height: 30))
-    private let stargazersCount: UILabel = .init(frame: .init(x: 0, y: 60, width: 100, height: 30))
-    private let language: UILabel = .init(frame: .init(x: 0, y: 90, width: 100, height: 30))
+    private let repoName: UILabel = {
+        let label: UILabel = .init()
+        label.font = .systemFont(ofSize: 18, weight: .regular)
+        return label
+    }()
+
+    private let repoDescription: UILabel = {
+        let label: UILabel = .init()
+        label.font = .systemFont(ofSize: 18, weight: .regular)
+        label.numberOfLines = 0   // 高さ動的化のため
+        return label
+    }()
+
+    private let stargazersCount: UILabel = {
+        let label: UILabel = .init()
+        label.font = .systemFont(ofSize: 18, weight: .regular)
+        return label
+    }()
+
+    private let language: UILabel = {
+        let label: UILabel = .init()
+        label.font = .systemFont(ofSize: 18, weight: .regular)
+        return label
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -36,17 +57,27 @@ class RepositoryViewCell: UICollectionViewCell {
 
     private func configureViewCell() {
         self.addSubview(repoName)
-        self.repoName.text = "hogehoge"
-        // repoName のレイアウト実装
+        repoName.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.width.equalToSuperview()   // 文字を折り返して表示するため
+        }
 
         self.addSubview(repoDescription)
-        self.repoDescription.text = "hugahuga"
+        repoDescription.sizeToFit()
+        repoDescription.snp.makeConstraints {
+            $0.top.equalTo(repoName.snp.bottom).offset(12)
+            $0.width.equalToSuperview()
+        }
 
         self.addSubview(stargazersCount)
-        self.stargazersCount.text = "\(10)"
+        stargazersCount.snp.makeConstraints {
+            $0.top.equalTo(repoDescription.snp.bottom).offset(12)
+        }
 
         self.addSubview(language)
-        self.language.text = "swift"
+        language.snp.makeConstraints {
+            $0.top.equalTo(stargazersCount.snp.bottom).offset(12)
+        }
     }
 
     required init?(coder: NSCoder) {

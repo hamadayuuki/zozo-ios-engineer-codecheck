@@ -7,6 +7,7 @@
 
 import UIKit
 import Combine
+import SnapKit
 
 class SearchRepositoryViewController: UIViewController {
     private var repository: SearchRepositoriesResponse = .init(items: [])   // TODO: 削除, VMで状態管理する
@@ -31,6 +32,7 @@ class SearchRepositoryViewController: UIViewController {
 
     private lazy var collectionView: UICollectionView = {
         let collectionView: UICollectionView = .init(frame: .zero, collectionViewLayout: .init())
+        collectionView.frame = self.view.frame
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(RepositoryViewCell.self, forCellWithReuseIdentifier: String(describing: RepositoryViewCell.self))
@@ -40,15 +42,22 @@ class SearchRepositoryViewController: UIViewController {
     // MARK: - function
 
     private func configureViews() {
-        /// Items layout
-        let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.itemSize = CGSize(
-            width: self.view.frame.width - 30,
-            height: RepositoryViewCell.cellHeight
-        )
+        // CollectionView
+        let layout = UICollectionViewCompositionalLayout { (_, _) -> NSCollectionLayoutSection? in
+            let spacing: CGFloat = 12
+            let width = self.view.bounds.width - (spacing * 2)
 
-        collectionView.collectionViewLayout = flowLayout
-        collectionView.frame = self.view.frame
+            let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(width), heightDimension: .fractionalHeight(1))
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(200))   // TODO: - 高さを動的化
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+
+            let section = NSCollectionLayoutSection(group: group)
+            section.contentInsets = .init(top: spacing, leading: spacing, bottom: spacing, trailing: spacing)
+            return section
+        }
+        collectionView.collectionViewLayout = layout
         self.view.addSubview(collectionView)
     }
 
@@ -99,7 +108,6 @@ extension SearchRepositoryViewController: UICollectionViewDelegate, UICollection
             language: item.language
         )
         cell.setState(state: cellState)
-        cell.backgroundColor = .gray
         return cell
     }
 }
