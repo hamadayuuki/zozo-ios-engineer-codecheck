@@ -5,11 +5,11 @@
 //  Created by yuki.hamada on 2024/06/28.
 //
 
-struct SearchRepositoriesResponse: Decodable {
+struct SearchRepositoriesResponse: Decodable, Hashable {
     var items: [GithubRepository]
 }
 
-struct GithubRepository: Decodable {
+struct GithubRepository: Decodable, Hashable {
     var id: Int
     var name: String
     var fullName: String

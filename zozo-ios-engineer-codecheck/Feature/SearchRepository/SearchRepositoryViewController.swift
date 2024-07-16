@@ -10,7 +10,12 @@ import Combine
 import SnapKit
 
 class SearchRepositoryViewController: UIViewController {
-    private var repository: SearchRepositoriesResponse = .init(items: [])   // TODO: 削除, VMで状態管理する
+    /// SearchRepositoryViewController の DiffableDataSource 用に定義
+    private enum SectionType {
+        case repositories
+    }
+
+    private var dataSource: UICollectionViewDiffableDataSource<SectionType, GithubRepository>!
     private let viewModel: SearchRepositoryViewModel
     private var cancellables = Set<AnyCancellable>()
 
@@ -23,6 +28,7 @@ class SearchRepositoryViewController: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = .white
+        configDataSource()
         configureViews()
         setupBinding()
         getButtonTapped()
@@ -33,8 +39,6 @@ class SearchRepositoryViewController: UIViewController {
     private lazy var collectionView: UICollectionView = {
         let collectionView: UICollectionView = .init(frame: .zero, collectionViewLayout: .init())
         collectionView.frame = self.view.frame
-        collectionView.delegate = self
-        collectionView.dataSource = self
         collectionView.register(RepositoryViewCell.self, forCellWithReuseIdentifier: String(describing: RepositoryViewCell.self))
         return collectionView
     }()
@@ -61,6 +65,39 @@ class SearchRepositoryViewController: UIViewController {
         self.view.addSubview(collectionView)
     }
 
+    private func configDataSource() {
+        // registration
+        let repositoryCell = UICollectionView.CellRegistration<RepositoryViewCell, GithubRepository>() { cell, _, repository in
+            let cellState: RepositoryViewCell.State = .init(
+                repoName: repository.fullName,
+                repoDescription: repository.description,
+                stargazersCount: repository.stargazersCount,
+                language: repository.language
+            )
+            cell.setState(state: cellState)
+        }
+
+        // dataSource
+        dataSource = .init(
+            collectionView: collectionView,
+            cellProvider: { collectionView, indexPath, repository in
+                collectionView.dequeueConfiguredReusableCell(using: repositoryCell, for: indexPath, item: repository)
+            }
+        )
+
+        // snapshot
+        var snapshot = NSDiffableDataSourceSnapshot<SectionType, GithubRepository>()
+        snapshot.appendSections([.repositories])
+        dataSource.apply(snapshot, animatingDifferences: true)
+    }
+
+    /// GitHubAPIから正常にレスポンスを受け取れ場合レポジトリ一覧のデータ更新する
+    private func updateDataSource(repositories: [GithubRepository]) {
+        var snapShot = dataSource.snapshot()
+        snapShot.appendItems(repositories, toSection: .repositories)
+        dataSource.apply(snapShot, animatingDifferences: true)
+    }
+
     private func setupBinding() {
         viewModel.$state
             .receive(on: DispatchQueue.main)
@@ -70,9 +107,9 @@ class SearchRepositoryViewController: UIViewController {
                 case .initial, .loading:
                     // TODO: - ローディング画面
                     break
-                case .success(let repositories):
-                    self.repository = repositories
-                    self.collectionView.reloadData()
+                case .success(let response):
+                    let repositories = response.items
+                    updateDataSource(repositories: repositories)
                 case .error(let errorDescription):
                     print(errorDescription)
                     // TODO: - エラー画面
@@ -88,26 +125,4 @@ class SearchRepositoryViewController: UIViewController {
     }
 
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-}
-
-// MARK: - UICollectionViewDataSource
-
-extension SearchRepositoryViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        repository.items.count
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: RepositoryViewCell.self), for: indexPath) as? RepositoryViewCell else { fatalError("Unable to dequeue CustomCollectionViewCell") }
-        // TODO: - DiffableDataSourceへ置き換え
-        let item = repository.items[indexPath.item]
-        let cellState: RepositoryViewCell.State = .init(
-            repoName: item.fullName,
-            repoDescription: item.description,
-            stargazersCount: item.stargazersCount,
-            language: item.language
-        )
-        cell.setState(state: cellState)
-        return cell
-    }
 }
