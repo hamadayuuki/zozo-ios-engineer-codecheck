@@ -20,10 +20,7 @@ class RepositoryViewCell: UICollectionViewCell {
         let language: String
     }
 
-    static let cellHeight: CGFloat = 150
-
-    // TODO: - SnapKit 用いてレイアウト実装する
-    // https://github.com/SnapKit/SnapKit
+    // TODO: - Coreフォルダを作りUILabel(やフォントサイズなど)を共通化する
     private let repoName: UILabel = {
         let label: UILabel = .init()
         label.font = .systemFont(ofSize: 18, weight: .regular)
