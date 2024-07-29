@@ -27,16 +27,12 @@ struct GithubRepository: Decodable, Hashable {
 // MARK: - for test
 
 extension SearchRepositoriesResponse {
-    /// テスト用
+    /// デバッグやテスト用 
     ///
     /// length で受け取った長さ分のリストを返却
     static func stub(length: Int = 1) -> Self {
-        var response: Self = .init(items: [])
-        for id in 0..<length {
-            // id は重複しないように
-            let item: GithubRepository = .init(id: id, name: "hoge", fullName: "hoge/hoge", htmlUrl: "", description: "hoge hoge hoge", language: "swift", stargazersCount: 100, watchersCount: 100, createdAt: "", updatedAt: "")
-            response.items.append(item)
-        }
-        return response
+        .init(items: Array(repeating: (), count: length).enumerated().map { index, _ -> GithubRepository in
+            GithubRepository(id: index, name: "hoge", fullName: "hoge/hoge", htmlUrl: "", description: "hoge hoge hoge", language: "swift", stargazersCount: 100, watchersCount: 100, createdAt: "", updatedAt: "")
+        })
     }
 }
