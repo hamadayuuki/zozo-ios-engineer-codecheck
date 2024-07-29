@@ -5,17 +5,19 @@
 //  Created by yuki.hamada on 2024/06/28.
 //
 
-struct SearchRepositoriesResponse: Decodable {
+import Foundation
+
+struct SearchRepositoriesResponse: Decodable, Hashable {
     var items: [GithubRepository]
 }
 
-struct GithubRepository: Decodable {
+struct GithubRepository: Decodable, Hashable {
     var id: Int
     var name: String
     var fullName: String
     var htmlUrl: String
     var description: String
-    var language: String?
+    var language: String
     var stargazersCount: Int
     var watchersCount: Int
     var createdAt: String
@@ -25,21 +27,12 @@ struct GithubRepository: Decodable {
 // MARK: - for test
 
 extension SearchRepositoriesResponse {
-    /// テスト用
-    static func mock() -> [GithubRepository] {
-        [
-            .init(
-                id: 0,
-                name: "",
-                fullName: "",
-                htmlUrl: "",
-                description: "",
-                language: "",
-                stargazersCount: 0,
-                watchersCount: 0,
-                createdAt: "",
-                updatedAt: ""
-            )
-        ]
+    /// デバッグやテスト用
+    ///
+    /// length で受け取った長さ分のリストを返却
+    static func stub(length: Int = 1) -> Self {
+        .init(items: Array(repeating: (), count: length).enumerated().map { index, _ -> GithubRepository in
+            GithubRepository(id: index, name: "hoge", fullName: "hoge/hoge", htmlUrl: "", description: "hoge hoge hoge", language: "swift", stargazersCount: 100, watchersCount: 100, createdAt: "", updatedAt: "")
+        })
     }
 }
