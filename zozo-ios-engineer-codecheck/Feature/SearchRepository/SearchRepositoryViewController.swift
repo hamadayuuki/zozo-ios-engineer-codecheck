@@ -31,7 +31,10 @@ class SearchRepositoryViewController: UIViewController {
         configDataSource()
         configureViews()
         setupBinding()
-        getButtonTapped()
+
+        Task {
+            try await viewModel.viewDidLoad(searchWord: "Swift")
+        }
     }
 
     // MARK: - UI compornents
@@ -116,12 +119,6 @@ class SearchRepositoryViewController: UIViewController {
                 }
             }
             .store(in: &cancellables)
-    }
-
-    private func getButtonTapped() {
-        Task {
-            try await viewModel.tappedGetButton(searchWord: "Swift")
-        }
     }
 
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }

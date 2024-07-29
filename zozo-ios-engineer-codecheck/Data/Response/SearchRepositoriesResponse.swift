@@ -27,7 +27,7 @@ struct GithubRepository: Decodable, Hashable {
 // MARK: - for test
 
 extension SearchRepositoriesResponse {
-    /// デバッグやテスト用 
+    /// デバッグやテスト用
     ///
     /// length で受け取った長さ分のリストを返却
     static func stub(length: Int = 1) -> Self {

@@ -7,16 +7,20 @@
 
 import Foundation
 
+// MARK: - Protocol
+
 // アクセスレベルは他のファイルから呼び出せるように設定
 protocol SearchRepositoryViewModelInput {
-    func tappedGetButton(searchWord: String) async throws
+    func viewDidLoad(searchWord: String) async throws
 }
 
-protocol SearchRepositoryViewModelInputOutput {
+protocol SearchRepositoryViewModelOutput {
     var state: SearchRepositoryViewModel.State { get }
 }
 
-protocol SearchRepositoryViewModelProtocol: SearchRepositoryViewModelInput, SearchRepositoryViewModelInputOutput {}
+protocol SearchRepositoryViewModelProtocol: SearchRepositoryViewModelInput, SearchRepositoryViewModelOutput {}
+
+// MARK: - ViewModel
 
 final class SearchRepositoryViewModel: SearchRepositoryViewModelProtocol {
     enum State: Equatable {
@@ -39,7 +43,7 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelProtocol {
     // MARK: - inputs
 
     @MainActor
-    func tappedGetButton(searchWord: String) async throws {
+    func viewDidLoad(searchWord: String) async throws {
         state = .loading
         let searchRepoRequest: SearchRepositoriesRequest = .init(searchWord: searchWord)
         do {

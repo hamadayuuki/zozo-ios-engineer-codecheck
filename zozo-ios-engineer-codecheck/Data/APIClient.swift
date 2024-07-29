@@ -15,7 +15,7 @@ class APIClient: APIClientProtocol {
     /// APIから取得したJSONを変換するためのDecoder
     ///
     /// `total_count -> totalCount`
-    private static var decoder: JSONDecoder {
+    private var decoder: JSONDecoder {
         let jsonDecoder = JSONDecoder()
         jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase  // total_count -> totalCount
         return jsonDecoder
@@ -40,7 +40,7 @@ class APIClient: APIClientProtocol {
         switch httpStatus.statusCode {
         case 200..<300:
             do {
-                let decodedData = try APIClient.decoder.decode(D.self, from: data)
+                let decodedData = try decoder.decode(D.self, from: data)
                 return .success(decodedData)
             } catch {
                 return .failure(.decodeError)
