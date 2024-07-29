@@ -80,7 +80,7 @@ class SearchRepositoryViewController: UIViewController {
         view.addSubview(collectionView)
     }
 
-    private func configDataSource() {
+    private func configureDataSource() {
         var snapshot = NSDiffableDataSourceSnapshot<SectionType, GithubRepository>()
         snapshot.appendSections([.repositories])
         dataSource.apply(snapshot, animatingDifferences: true)
