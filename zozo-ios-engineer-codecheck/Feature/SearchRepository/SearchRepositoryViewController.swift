@@ -15,7 +15,24 @@ class SearchRepositoryViewController: UIViewController {
         case repositories
     }
 
-    private var dataSource: UICollectionViewDiffableDataSource<SectionType, GithubRepository>!
+    private lazy var dataSource: UICollectionViewDiffableDataSource<SectionType, GithubRepository> =  {
+        let repositoryCell = UICollectionView.CellRegistration<RepositoryViewCell, GithubRepository>() { cell, _, repository in
+            let cellState: RepositoryViewCell.State = .init(
+                repoName: repository.fullName,
+                repoDescription: repository.description,
+                stargazersCount: repository.stargazersCount,
+                language: repository.language
+            )
+            cell.setState(state: cellState)
+        }
+
+        return .init(
+            collectionView: self.collectionView,
+            cellProvider: { collectionView, indexPath, repository in
+                collectionView.dequeueConfiguredReusableCell(using: repositoryCell, for: indexPath, item: repository)
+            }
+        )
+    }()
     private let viewModel: SearchRepositoryViewModel
     private var cancellables = Set<AnyCancellable>()
 
@@ -69,26 +86,6 @@ class SearchRepositoryViewController: UIViewController {
     }
 
     private func configDataSource() {
-        // registration
-        let repositoryCell = UICollectionView.CellRegistration<RepositoryViewCell, GithubRepository>() { cell, _, repository in
-            let cellState: RepositoryViewCell.State = .init(
-                repoName: repository.fullName,
-                repoDescription: repository.description,
-                stargazersCount: repository.stargazersCount,
-                language: repository.language
-            )
-            cell.setState(state: cellState)
-        }
-
-        // dataSource
-        dataSource = .init(
-            collectionView: collectionView,
-            cellProvider: { collectionView, indexPath, repository in
-                collectionView.dequeueConfiguredReusableCell(using: repositoryCell, for: indexPath, item: repository)
-            }
-        )
-
-        // snapshot
         var snapshot = NSDiffableDataSourceSnapshot<SectionType, GithubRepository>()
         snapshot.appendSections([.repositories])
         dataSource.apply(snapshot, animatingDifferences: true)
