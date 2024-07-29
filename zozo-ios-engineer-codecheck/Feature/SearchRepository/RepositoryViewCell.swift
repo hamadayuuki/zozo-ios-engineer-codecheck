@@ -53,25 +53,25 @@ class RepositoryViewCell: UICollectionViewCell {
     }
 
     private func configureViewCell() {
-        self.addSubview(repoName)
+        addSubview(repoName)
         repoName.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.width.equalToSuperview()   // 文字を折り返して表示するため
         }
 
-        self.addSubview(repoDescription)
+        addSubview(repoDescription)
         repoDescription.sizeToFit()
         repoDescription.snp.makeConstraints {
             $0.top.equalTo(repoName.snp.bottom).offset(12)
             $0.width.equalToSuperview()
         }
 
-        self.addSubview(stargazersCount)
+        addSubview(stargazersCount)
         stargazersCount.snp.makeConstraints {
             $0.top.equalTo(repoDescription.snp.bottom).offset(12)
         }
 
-        self.addSubview(language)
+        addSubview(language)
         language.snp.makeConstraints {
             $0.top.equalTo(stargazersCount.snp.bottom).offset(12)
         }
@@ -82,9 +82,9 @@ class RepositoryViewCell: UICollectionViewCell {
     }
 
     func setState(state: State) {
-        self.repoName.text = state.repoName
-        self.repoDescription.text = state.repoDescription
-        self.stargazersCount.text = "\(state.stargazersCount)"
-        self.language.text = state.language
+        repoName.text = state.repoName
+        repoDescription.text = state.repoDescription
+        stargazersCount.text = "\(state.stargazersCount)"
+        language.text = state.language
     }
 }

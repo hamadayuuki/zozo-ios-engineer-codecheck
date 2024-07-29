@@ -38,7 +38,7 @@ class SearchRepositoryViewController: UIViewController {
 
     private lazy var collectionView: UICollectionView = {
         let collectionView: UICollectionView = .init(frame: .zero, collectionViewLayout: .init())
-        collectionView.frame = self.view.frame
+        collectionView.frame = view.frame
         collectionView.register(RepositoryViewCell.self, forCellWithReuseIdentifier: String(describing: RepositoryViewCell.self))
         return collectionView
     }()
@@ -62,7 +62,7 @@ class SearchRepositoryViewController: UIViewController {
             return section
         }
         collectionView.collectionViewLayout = layout
-        self.view.addSubview(collectionView)
+        view.addSubview(collectionView)
     }
 
     private func configDataSource() {
