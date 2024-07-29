@@ -15,8 +15,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
         let window = UIWindow(windowScene: windowScene)
-        let apiClient = APIClient()
-        window.rootViewController = SearchRepositoryViewController(viewModel: .init(apiClient: apiClient))
+        window.rootViewController = SearchRepositoryViewController()
         window.makeKeyAndVisible()
         self.window = window
     }
