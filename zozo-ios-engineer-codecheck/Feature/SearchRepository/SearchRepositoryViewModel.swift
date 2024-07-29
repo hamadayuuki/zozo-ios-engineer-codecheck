@@ -30,7 +30,7 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelProtocol {
         case error(String)
     }
 
-    private(set) var apiClient: APIClientProtocol
+    private let apiClient: APIClientProtocol
 
     init(apiClient: APIClientProtocol) {
         self.apiClient = apiClient
