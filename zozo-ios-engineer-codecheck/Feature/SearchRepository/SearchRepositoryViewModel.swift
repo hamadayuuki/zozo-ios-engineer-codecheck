@@ -11,7 +11,7 @@ import Foundation
 
 // アクセスレベルは他のファイルから呼び出せるように設定
 protocol SearchRepositoryViewModelInput {
-    func viewDidLoad(searchWord: String) async throws
+    func searchButtonTapped(searchWord: String) async throws
 }
 
 protocol SearchRepositoryViewModelOutput {
@@ -43,7 +43,7 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelProtocol {
     // MARK: - inputs
 
     @MainActor
-    func viewDidLoad(searchWord: String) async throws {
+    func searchButtonTapped(searchWord: String) async throws {
         state = .loading
         let searchRepoRequest: SearchRepositoriesRequest = .init(searchWord: searchWord)
         do {

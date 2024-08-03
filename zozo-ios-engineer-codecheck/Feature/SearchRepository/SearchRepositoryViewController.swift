@@ -44,10 +44,6 @@ class SearchRepositoryViewController: UIViewController {
         configureDataSource()
         configureViews()
         setupBinding()
-
-        Task {
-            try await viewModel.viewDidLoad(searchWord: "Swift")
-        }
     }
 
     // MARK: - UI
@@ -107,9 +103,11 @@ class SearchRepositoryViewController: UIViewController {
             .sink { [weak self] state in
                 guard let self else { return }
                 switch state {
-                case .initial, .loading:
+                case .initial:
+                    updateDataSource(repositories: [])
+                case .loading:
+                    updateDataSource(repositories: [])
                     // TODO: - ローディング画面
-                    break
                 case .success(let response):
                     let repositories = response.items
                     updateDataSource(repositories: repositories)
@@ -158,6 +156,11 @@ extension SearchRepositoryViewController: UISearchBarDelegate {
 
     // エンターキーで検索
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchWord = searchBar.text else { return }
+        Task {
+            try await viewModel.searchButtonTapped(searchWord: searchWord)
+        }
+
         searchBar.resignFirstResponder()
         searchBar.setShowsCancelButton(false, animated: true)
     }
