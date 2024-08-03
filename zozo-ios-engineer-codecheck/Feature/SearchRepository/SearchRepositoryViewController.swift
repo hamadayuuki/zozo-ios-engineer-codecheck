@@ -59,7 +59,20 @@ class SearchRepositoryViewController: UIViewController {
         return collectionView
     }()
 
+    private lazy var searchBar: UISearchBar = {
+        let searchBar: UISearchBar = .init()
+        searchBar.delegate = self
+        return searchBar
+    }()
+
     private func configureViews() {
+        view.addSubview(searchBar)
+        searchBar.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.left.equalToSuperview()
+            $0.right.equalToSuperview()
+        }
+
         let layout = UICollectionViewCompositionalLayout { (_, _) -> NSCollectionLayoutSection? in
             let spacing: CGFloat = 12
             let width = self.view.bounds.width - (spacing * 2)
@@ -76,6 +89,12 @@ class SearchRepositoryViewController: UIViewController {
         }
         collectionView.collectionViewLayout = layout
         view.addSubview(collectionView)
+        collectionView.snp.makeConstraints {
+            $0.top.equalTo(searchBar.snp.bottom)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            $0.left.equalToSuperview()
+            $0.right.equalToSuperview()
+        }
     }
 
     // MARK: - function
@@ -120,3 +139,7 @@ extension SearchRepositoryViewController {
     }
 
 }
+
+// MARK: - UISearchBar
+
+extension SearchRepositoryViewController: UISearchBarDelegate {}
