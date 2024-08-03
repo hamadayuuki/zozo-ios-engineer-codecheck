@@ -10,6 +10,7 @@ import Combine
 import SnapKit
 
 class SearchRepositoryViewController: UIViewController {
+
     /// SearchRepositoryViewController の DiffableDataSource 用に定義
     private enum SectionType {
         case repositories
@@ -40,7 +41,7 @@ class SearchRepositoryViewController: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = .white
-        configDataSource()
+        configureDataSource()
         configureViews()
         setupBinding()
 
@@ -49,7 +50,7 @@ class SearchRepositoryViewController: UIViewController {
         }
     }
 
-    // MARK: - UI compornents
+    // MARK: - UI
 
     private lazy var collectionView: UICollectionView = {
         let collectionView: UICollectionView = .init(frame: .zero, collectionViewLayout: .init())
@@ -58,10 +59,7 @@ class SearchRepositoryViewController: UIViewController {
         return collectionView
     }()
 
-    // MARK: - function
-
     private func configureViews() {
-        // CollectionView
         let layout = UICollectionViewCompositionalLayout { (_, _) -> NSCollectionLayoutSection? in
             let spacing: CGFloat = 12
             let width = self.view.bounds.width - (spacing * 2)
@@ -80,18 +78,7 @@ class SearchRepositoryViewController: UIViewController {
         view.addSubview(collectionView)
     }
 
-    private func configureDataSource() {
-        var snapshot = NSDiffableDataSourceSnapshot<SectionType, GithubRepository>()
-        snapshot.appendSections([.repositories])
-        dataSource.apply(snapshot, animatingDifferences: true)
-    }
-
-    /// GitHubAPIから正常にレスポンスを受け取れ場合レポジトリ一覧のデータ更新する
-    private func updateDataSource(repositories: [GithubRepository]) {
-        var snapShot = dataSource.snapshot()
-        snapShot.appendItems(repositories, toSection: .repositories)
-        dataSource.apply(snapShot, animatingDifferences: true)
-    }
+    // MARK: - function
 
     private func setupBinding() {
         viewModel.$state
@@ -112,4 +99,24 @@ class SearchRepositoryViewController: UIViewController {
             }
             .store(in: &cancellables)
     }
+
+}
+
+// MARK: - UICollectionView
+
+extension SearchRepositoryViewController {
+
+    private func configureDataSource() {
+        var snapshot = NSDiffableDataSourceSnapshot<SectionType, GithubRepository>()
+        snapshot.appendSections([.repositories])
+        dataSource.apply(snapshot, animatingDifferences: true)
+    }
+
+    /// GitHubAPIから正常にレスポンスを受け取れ場合レポジトリ一覧のデータ更新する
+    private func updateDataSource(repositories: [GithubRepository]) {
+        var snapShot = dataSource.snapshot()
+        snapShot.appendItems(repositories, toSection: .repositories)
+        dataSource.apply(snapShot, animatingDifferences: true)
+    }
+
 }
