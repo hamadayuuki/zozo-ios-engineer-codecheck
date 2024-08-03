@@ -61,6 +61,8 @@ class SearchRepositoryViewController: UIViewController {
 
     private lazy var searchBar: UISearchBar = {
         let searchBar: UISearchBar = .init()
+        searchBar.backgroundImage = .init()   // 枠線削除
+        searchBar.showsCancelButton = true
         searchBar.delegate = self
         return searchBar
     }()
@@ -142,4 +144,21 @@ extension SearchRepositoryViewController {
 
 // MARK: - UISearchBar
 
-extension SearchRepositoryViewController: UISearchBarDelegate {}
+extension SearchRepositoryViewController: UISearchBarDelegate {
+    // 検索バー編集開始時にキャンセルボタン有効化
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(true, animated: true)
+    }
+
+    // キャンセルボタンでキャセルボタン非表示
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        searchBar.setShowsCancelButton(false, animated: true)
+    }
+
+    // エンターキーで検索
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        searchBar.setShowsCancelButton(false, animated: true)
+    }
+}
