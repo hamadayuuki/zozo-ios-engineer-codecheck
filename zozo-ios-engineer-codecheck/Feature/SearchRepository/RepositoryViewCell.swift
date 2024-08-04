@@ -23,26 +23,28 @@ class RepositoryViewCell: UICollectionViewCell {
     // TODO: - Coreフォルダを作りUILabel(やフォントサイズなど)を共通化する
     private let repoName: UILabel = {
         let label: UILabel = .init()
-        label.font = .systemFont(ofSize: 18, weight: .regular)
+        label.font = .systemFont(ofSize: 16, weight: .bold)
         return label
     }()
 
     private let repoDescription: UILabel = {
         let label: UILabel = .init()
-        label.font = .systemFont(ofSize: 18, weight: .regular)
+        label.font = .systemFont(ofSize: 14, weight: .regular)
         label.numberOfLines = 0   // 高さ動的化のため
         return label
     }()
 
     private let stargazersCount: UILabel = {
         let label: UILabel = .init()
-        label.font = .systemFont(ofSize: 18, weight: .regular)
+        label.font = .systemFont(ofSize: 14, weight: .regular)
+        label.textColor = .gray
         return label
     }()
 
     private let language: UILabel = {
         let label: UILabel = .init()
-        label.font = .systemFont(ofSize: 18, weight: .regular)
+        label.font = .systemFont(ofSize: 14, weight: .regular)
+        label.textColor = .gray
         return label
     }()
 
@@ -66,14 +68,24 @@ class RepositoryViewCell: UICollectionViewCell {
             $0.width.equalToSuperview()
         }
 
-        addSubview(stargazersCount)
-        stargazersCount.snp.makeConstraints {
+        let horizontalViewStack: UIStackView = {
+            let viewStack = UIStackView(arrangedSubviews: [stargazersCount, language])
+            viewStack.axis = .horizontal
+            viewStack.spacing = 12
+            return viewStack
+        }()
+        addSubview(horizontalViewStack)
+        horizontalViewStack.snp.makeConstraints {
             $0.top.equalTo(repoDescription.snp.bottom).offset(12)
         }
 
-        addSubview(language)
-        language.snp.makeConstraints {
-            $0.top.equalTo(stargazersCount.snp.bottom).offset(12)
+        let divider = UIView()
+        divider.backgroundColor = .lightGray
+        addSubview(divider)
+        divider.snp.makeConstraints {
+            $0.bottom.equalToSuperview().offset(-12)   // TODO: - 高さ動的化の時offsetを使わない実装, 他要素の高さによって他要素と重なって表示される
+            $0.height.equalTo(1)
+            $0.width.equalToSuperview()
         }
     }
 
@@ -84,7 +96,7 @@ class RepositoryViewCell: UICollectionViewCell {
     func setState(state: State) {
         repoName.text = state.repoName
         repoDescription.text = state.repoDescription
-        stargazersCount.text = "\(state.stargazersCount)"
-        language.text = state.language
+        stargazersCount.text = "⭐︎ \(state.stargazersCount)"
+        language.text = "✏︎ \(state.language)"
     }
 }
