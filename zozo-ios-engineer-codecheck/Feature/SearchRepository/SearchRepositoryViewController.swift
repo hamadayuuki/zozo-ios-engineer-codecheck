@@ -20,9 +20,9 @@ class SearchRepositoryViewController: UIViewController {
         let repositoryCell = UICollectionView.CellRegistration<RepositoryViewCell, GithubRepository>() { cell, _, repository in
             let cellState: RepositoryViewCell.State = .init(
                 repoName: repository.fullName,
-                repoDescription: repository.description,
+                repoDescription: repository.description ?? "",
                 stargazersCount: repository.stargazersCount,
-                language: repository.language
+                language: repository.language ?? ""
             )
             cell.setState(state: cellState)
         }
@@ -104,9 +104,9 @@ class SearchRepositoryViewController: UIViewController {
                 guard let self else { return }
                 switch state {
                 case .initial:
-                    updateDataSource(repositories: [])
+                    resetDataSource()
                 case .loading:
-                    updateDataSource(repositories: [])
+                    break
                     // TODO: - ローディング画面
                 case .success(let response):
                     let repositories = response.items
@@ -129,6 +129,13 @@ extension SearchRepositoryViewController {
         var snapshot = NSDiffableDataSourceSnapshot<SectionType, GithubRepository>()
         snapshot.appendSections([.repositories])
         dataSource.apply(snapshot, animatingDifferences: true)
+    }
+
+    private func resetDataSource() {
+        var snapShot = dataSource.snapshot()
+        snapShot.deleteAllItems()
+        snapShot.appendSections([.repositories])
+        dataSource.apply(snapShot, animatingDifferences: true)
     }
 
     /// GitHubAPIから正常にレスポンスを受け取れ場合レポジトリ一覧のデータ更新する

@@ -44,6 +44,7 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelProtocol {
 
     @MainActor
     func searchButtonTapped(searchWord: String) async throws {
+        state = .initial
         state = .loading
         let searchRepoRequest: SearchRepositoriesRequest = .init(searchWord: searchWord)
         do {
