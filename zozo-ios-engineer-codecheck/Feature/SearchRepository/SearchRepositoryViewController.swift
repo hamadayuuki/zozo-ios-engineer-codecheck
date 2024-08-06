@@ -72,17 +72,19 @@ class SearchRepositoryViewController: UIViewController {
         }
 
         let layout = UICollectionViewCompositionalLayout { (_, _) -> NSCollectionLayoutSection? in
-            let spacing: CGFloat = 12
-            let width = self.view.bounds.width - (spacing * 2)
+            let space: CGFloat = 12
+            let width = self.view.bounds.width - (space * 2)
 
-            let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(width), heightDimension: .fractionalHeight(1))
+            /// アイテムサイズ動的化のため
+            let heightDimension: NSCollectionLayoutDimension = .estimated(1)
+            let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(width), heightDimension: heightDimension)
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(150))   // TODO: - 高さを動的化
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: heightDimension)
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
             let section = NSCollectionLayoutSection(group: group)
-            section.contentInsets = .init(top: spacing, leading: spacing, bottom: spacing, trailing: spacing)
+            section.contentInsets = .init(top: space, leading: space, bottom: space, trailing: space)
             return section
         }
         collectionView.collectionViewLayout = layout

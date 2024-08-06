@@ -38,6 +38,7 @@ class RepositoryViewCell: UICollectionViewCell {
         let label: UILabel = .init()
         label.font = .systemFont(ofSize: 14, weight: .regular)
         label.textColor = .gray
+        label.setContentHuggingPriority(.required, for: .horizontal)   // 領域拡大によるレイアウト崩れ防止
         return label
     }()
 
@@ -45,7 +46,14 @@ class RepositoryViewCell: UICollectionViewCell {
         let label: UILabel = .init()
         label.font = .systemFont(ofSize: 14, weight: .regular)
         label.textColor = .gray
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)   // 領域縮小によるレイアウト崩れ防止
         return label
+    }()
+
+    private let divider: UIView = {
+        let divider = UIView()
+        divider.backgroundColor = .systemGray5
+        return divider
     }()
 
     override init(frame: CGRect) {
@@ -55,37 +63,25 @@ class RepositoryViewCell: UICollectionViewCell {
     }
 
     private func configureViewCell() {
-        addSubview(repoName)
-        repoName.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.width.equalToSuperview()   // 文字を折り返して表示するため
+        let space: CGFloat = 12
+        let horizontalStackView = UIStackView(arrangedSubviews: [stargazersCount, language])
+        horizontalStackView.axis = .horizontal
+        horizontalStackView.spacing = space
+
+        let stackView = UIStackView(arrangedSubviews: [repoName, repoDescription, horizontalStackView])
+        stackView.axis = .vertical
+        stackView.spacing = space
+        contentView.addSubview(stackView)
+        stackView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview()
+            $0.verticalEdges.equalToSuperview().inset(space)
         }
 
-        addSubview(repoDescription)
-        repoDescription.sizeToFit()
-        repoDescription.snp.makeConstraints {
-            $0.top.equalTo(repoName.snp.bottom).offset(12)
-            $0.width.equalToSuperview()
-        }
-
-        let horizontalViewStack: UIStackView = {
-            let viewStack = UIStackView(arrangedSubviews: [stargazersCount, language])
-            viewStack.axis = .horizontal
-            viewStack.spacing = 12
-            return viewStack
-        }()
-        addSubview(horizontalViewStack)
-        horizontalViewStack.snp.makeConstraints {
-            $0.top.equalTo(repoDescription.snp.bottom).offset(12)
-        }
-
-        let divider = UIView()
-        divider.backgroundColor = .lightGray
-        addSubview(divider)
+        contentView.addSubview(divider)
         divider.snp.makeConstraints {
-            $0.bottom.equalToSuperview().offset(-12)   // TODO: - 高さ動的化の時offsetを使わない実装, 他要素の高さによって他要素と重なって表示される
+            $0.top.equalTo(stackView.snp.bottom).offset(space)   // stackViewの上下に余白を12とっているためoffsetで表示位置ずらしても問題ない
+            $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(1)
-            $0.width.equalToSuperview()
         }
     }
 
