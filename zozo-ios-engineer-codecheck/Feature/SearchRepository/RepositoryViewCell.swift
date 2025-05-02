@@ -74,7 +74,7 @@ class RepositoryViewCell: UICollectionViewCell {
         contentView.addSubview(stackView)
         stackView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview()
-            $0.verticalEdges.equalToSuperview().inset(space)
+            $0.verticalEdges.equalToSuperview().inset(space).priority(.low)   // collectionViewの動的なアイテムサイズ(.estimated(1))が原因で Auto Layout の競合が発生したため、垂直方向の制約の優先度を下げて (priority(.low)) 、競合を解決
         }
 
         contentView.addSubview(divider)
