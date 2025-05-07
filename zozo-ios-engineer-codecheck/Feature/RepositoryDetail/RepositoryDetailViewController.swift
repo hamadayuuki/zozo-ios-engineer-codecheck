@@ -36,15 +36,22 @@ class RepositoryDetailViewController: UIViewController {
 
     private let repositoryNameLabel: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 24)
+        label.font = .systemFont(ofSize: 24, weight: .bold)
         label.numberOfLines = 0
         return label
     }()
 
     private let ownerNameLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 16)
+        label.font = .systemFont(ofSize: 24)
         label.textColor = .gray
+        return label
+    }()
+
+    private let updatedAtLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 12, weight: .regular)
+        label.numberOfLines = 0
         return label
     }()
 
@@ -89,15 +96,24 @@ class RepositoryDetailViewController: UIViewController {
     private func configureViews() {
         view.backgroundColor = .white
 
+        let thumbnaiVerticalStack = UIStackView(arrangedSubviews: [thumbnailImageView, repositoryNameLabel, languageLabel, updatedAtLabel])
+        thumbnaiVerticalStack.axis = .vertical
+        thumbnaiVerticalStack.spacing = 8
+        thumbnaiVerticalStack.alignment = .center
+
         let infoHorizontalStack = UIStackView(arrangedSubviews: [starCountLabel, forkCountLabel])
         infoHorizontalStack.axis = .horizontal
         infoHorizontalStack.spacing = 16
         infoHorizontalStack.alignment = .leading
 
-        let mainVerticalStack = UIStackView(arrangedSubviews: [thumbnailImageView, repositoryNameLabel, ownerNameLabel, languageLabel, descriptionLabel, infoHorizontalStack])
+        let descriptionVerticalStack = UIStackView(arrangedSubviews: [descriptionLabel, infoHorizontalStack])
+        descriptionVerticalStack.axis = .vertical
+        descriptionVerticalStack.spacing = 12
+        descriptionVerticalStack.alignment = .leading
+
+        let mainVerticalStack = UIStackView(arrangedSubviews: [thumbnaiVerticalStack, descriptionVerticalStack])
         mainVerticalStack.axis = .vertical
         mainVerticalStack.spacing = 16
-        mainVerticalStack.alignment = .leading
         view.addSubview(mainVerticalStack)
 
         mainVerticalStack.snp.makeConstraints { make in
@@ -106,9 +122,11 @@ class RepositoryDetailViewController: UIViewController {
             make.trailing.equalToSuperview().offset(-20)
         }
 
+        thumbnailImageView.layer.cornerRadius = 12
+        thumbnailImageView.clipsToBounds = true
         thumbnailImageView.snp.makeConstraints { make in
-            make.height.equalTo(150)
-            make.width.equalTo(150)
+            make.height.equalTo(250)
+            make.width.equalTo(250)
         }
     }
 
@@ -130,6 +148,7 @@ class RepositoryDetailViewController: UIViewController {
 
         navigationItem.title = repositoryDetail.name
         repositoryNameLabel.text = repositoryDetail.name
+        updatedAtLabel.text = "updated at \(repositoryDetail.updatedAt)"
         ownerNameLabel.text = "by \(repositoryDetail.owner.login)"
         descriptionLabel.text = repositoryDetail.description
         starCountLabel.text = "⭐︎ " + "\(repositoryDetail.stargazersCount)"
