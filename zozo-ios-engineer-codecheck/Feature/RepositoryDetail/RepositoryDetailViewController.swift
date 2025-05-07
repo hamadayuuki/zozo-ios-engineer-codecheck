@@ -7,10 +7,12 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 // モック用に作成
 // 今後APIからのレスポンスを定義し、以下のRepositoryは削除
 struct Repository {
+    let thumbnail_url: String
     let name: String
     let owner: String
     let description: String
@@ -27,6 +29,12 @@ class RepositoryDetailViewController: UIViewController {
     }
 
     // MARK: - UI components
+
+    private let thumbnailImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
 
     private let repositoryNameLabel: UILabel = {
         let label = UILabel()
@@ -76,6 +84,7 @@ class RepositoryDetailViewController: UIViewController {
 
         // ダミーデータ
         repository = Repository(
+            thumbnail_url: "https://cdn.pixabay.com/photo/2022/01/30/13/33/github-6980894_1280.png",
             name: "SwiftUI-MVVM-Example",
             owner: "apple",
             description: "A comprehensive example of using SwiftUI with the MVVM architecture.",
@@ -93,7 +102,7 @@ class RepositoryDetailViewController: UIViewController {
         infoHorizontalStack.spacing = 16
         infoHorizontalStack.alignment = .leading
 
-        let mainVerticalStack = UIStackView(arrangedSubviews: [repositoryNameLabel, ownerNameLabel, languageLabel, descriptionLabel, infoHorizontalStack])
+        let mainVerticalStack = UIStackView(arrangedSubviews: [thumbnailImageView, repositoryNameLabel, ownerNameLabel, languageLabel, descriptionLabel, infoHorizontalStack])
         mainVerticalStack.axis = .vertical
         mainVerticalStack.spacing = 16
         mainVerticalStack.alignment = .leading
@@ -104,17 +113,24 @@ class RepositoryDetailViewController: UIViewController {
             make.leading.equalToSuperview().offset(20)
             make.trailing.equalToSuperview().offset(-20)
         }
+
+        thumbnailImageView.snp.makeConstraints { make in
+            make.height.equalTo(150)
+            make.width.equalTo(150)
+        }
     }
 
     private func updateUI() {
-        if let repo = repository {
-            navigationItem.title = repo.name
-            repositoryNameLabel.text = repo.name
-            ownerNameLabel.text = "by \(repo.owner)"
-            descriptionLabel.text = repo.description
-            starCountLabel.text = "⭐︎ " + "\(repo.stars)"
-            forkCountLabel.text = "🍴 " + "\(repo.forks)"
-            languageLabel.text = repo.language
-        }
+        guard let repo = repository else { return }
+        guard let thumbnailURL = URL(string: repo.thumbnail_url) else { return }
+
+        thumbnailImageView.kf.setImage(with: thumbnailURL)
+        navigationItem.title = repo.name
+        repositoryNameLabel.text = repo.name
+        ownerNameLabel.text = "by \(repo.owner)"
+        descriptionLabel.text = repo.description
+        starCountLabel.text = "⭐︎ " + "\(repo.stars)"
+        forkCountLabel.text = "🍴 " + "\(repo.forks)"
+        languageLabel.text = repo.language
     }
 }
