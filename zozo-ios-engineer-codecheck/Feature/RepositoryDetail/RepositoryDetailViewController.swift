@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Kingfisher
+import Combine
 
 // モック用に作成
 // 今後APIからのレスポンスを定義し、以下のRepositoryは削除
@@ -22,11 +23,8 @@ struct Repository {
 }
 
 class RepositoryDetailViewController: UIViewController {
-    var repository: Repository? {
-        didSet {
-            updateUI()
-        }
-    }
+    let viewModel: RepositoryDetailViewModel = .init(owner: "hamadayuuki", repo: "irodori", apiClient: APIClient())
+    private var cancellables = Set<AnyCancellable>()
 
     // MARK: - UI components
 
@@ -79,24 +77,18 @@ class RepositoryDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupBinding()
         configureViews()
-        view.backgroundColor = .white
-
-        // ダミーデータ
-        repository = Repository(
-            thumbnail_url: "https://cdn.pixabay.com/photo/2022/01/30/13/33/github-6980894_1280.png",
-            name: "SwiftUI-MVVM-Example",
-            owner: "apple",
-            description: "A comprehensive example of using SwiftUI with the MVVM architecture.",
-            stars: 1234,
-            forks: 567,
-            language: "Swift"
-        )
+        Task {
+            await viewModel.viewDidLoad()
+        }
     }
 
     // MARK: - function
 
     private func configureViews() {
+        view.backgroundColor = .white
+
         let infoHorizontalStack = UIStackView(arrangedSubviews: [starCountLabel, forkCountLabel])
         infoHorizontalStack.axis = .horizontal
         infoHorizontalStack.spacing = 16
@@ -120,17 +112,28 @@ class RepositoryDetailViewController: UIViewController {
         }
     }
 
-    private func updateUI() {
-        guard let repo = repository else { return }
-        guard let thumbnailURL = URL(string: repo.thumbnail_url) else { return }
+    private func setupBinding() {
+        viewModel.$repositoryDetail
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.updateUI()
+            }
+            .store(in: &cancellables)
+    }
 
-        thumbnailImageView.kf.setImage(with: thumbnailURL)
-        navigationItem.title = repo.name
-        repositoryNameLabel.text = repo.name
-        ownerNameLabel.text = "by \(repo.owner)"
-        descriptionLabel.text = repo.description
-        starCountLabel.text = "⭐︎ " + "\(repo.stars)"
-        forkCountLabel.text = "🍴 " + "\(repo.forks)"
-        languageLabel.text = repo.language
+    private func updateUI() {
+        guard let repositoryDetail = viewModel.repositoryDetail else { return }
+        if let avatarURL = repositoryDetail.owner.avatarUrl {
+            let thumbnailURL = URL(string: avatarURL)
+            thumbnailImageView.kf.setImage(with: thumbnailURL)
+        }
+
+        navigationItem.title = repositoryDetail.name
+        repositoryNameLabel.text = repositoryDetail.name
+        ownerNameLabel.text = "by \(repositoryDetail.owner.login)"
+        descriptionLabel.text = repositoryDetail.description
+        starCountLabel.text = "⭐︎ " + "\(repositoryDetail.stargazersCount)"
+        forkCountLabel.text = "🍴 " + "\(repositoryDetail.forksCount)"
+        languageLabel.text = repositoryDetail.language
     }
 }
