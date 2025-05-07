@@ -23,7 +23,7 @@ struct Repository {
 }
 
 class RepositoryDetailViewController: UIViewController {
-    let viewModel: RepositoryDetailViewModel = .init(owner: "hamadayuuki", repo: "irodori", apiClient: APIClient())
+    let viewModel: RepositoryDetailViewModel = .init(owner: "swiftlang", repo: "swift", apiClient: APIClient())
     private var cancellables = Set<AnyCancellable>()
 
     // MARK: - UI components
@@ -58,6 +58,7 @@ class RepositoryDetailViewController: UIViewController {
     private let descriptionLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14)
+        label.textColor = .gray
         label.numberOfLines = 0
         return label
     }()
@@ -113,7 +114,7 @@ class RepositoryDetailViewController: UIViewController {
 
         let mainVerticalStack = UIStackView(arrangedSubviews: [thumbnaiVerticalStack, descriptionVerticalStack])
         mainVerticalStack.axis = .vertical
-        mainVerticalStack.spacing = 16
+        mainVerticalStack.spacing = 24
         view.addSubview(mainVerticalStack)
 
         mainVerticalStack.snp.makeConstraints { make in
@@ -125,8 +126,8 @@ class RepositoryDetailViewController: UIViewController {
         thumbnailImageView.layer.cornerRadius = 12
         thumbnailImageView.clipsToBounds = true
         thumbnailImageView.snp.makeConstraints { make in
-            make.height.equalTo(250)
-            make.width.equalTo(250)
+            make.height.equalTo(300)
+            make.width.equalTo(300)
         }
     }
 
