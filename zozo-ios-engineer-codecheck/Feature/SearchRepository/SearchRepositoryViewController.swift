@@ -10,6 +10,7 @@ import Combine
 import SnapKit
 
 class SearchRepositoryViewController: UIViewController {
+
     /// SearchRepositoryViewController の DiffableDataSource 用に定義
     private enum SectionType {
         case repositories
@@ -19,9 +20,9 @@ class SearchRepositoryViewController: UIViewController {
         let repositoryCell = UICollectionView.CellRegistration<RepositoryViewCell, GithubRepository>() { cell, _, repository in
             let cellState: RepositoryViewCell.State = .init(
                 repoName: repository.fullName,
-                repoDescription: repository.description,
+                repoDescription: repository.description ?? "",
                 stargazersCount: repository.stargazersCount,
-                language: repository.language
+                language: repository.language ?? ""
             )
             cell.setState(state: cellState)
         }
@@ -40,16 +41,12 @@ class SearchRepositoryViewController: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = .white
-        configDataSource()
+        configureDataSource()
         configureViews()
         setupBinding()
-
-        Task {
-            try await viewModel.viewDidLoad(searchWord: "Swift")
-        }
     }
 
-    // MARK: - UI compornents
+    // MARK: - UI
 
     private lazy var collectionView: UICollectionView = {
         let collectionView: UICollectionView = .init(frame: .zero, collectionViewLayout: .init())
@@ -58,40 +55,49 @@ class SearchRepositoryViewController: UIViewController {
         return collectionView
     }()
 
-    // MARK: - function
+    private lazy var searchBar: UISearchBar = {
+        let searchBar: UISearchBar = .init()
+        searchBar.backgroundImage = .init()   // 枠線削除
+        searchBar.showsCancelButton = true
+        searchBar.delegate = self
+        return searchBar
+    }()
 
     private func configureViews() {
-        // CollectionView
-        let layout = UICollectionViewCompositionalLayout { (_, _) -> NSCollectionLayoutSection? in
-            let spacing: CGFloat = 12
-            let width = self.view.bounds.width - (spacing * 2)
+        view.addSubview(searchBar)
+        searchBar.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.left.equalToSuperview()
+            $0.right.equalToSuperview()
+        }
 
-            let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(width), heightDimension: .fractionalHeight(1))
+        let layout = UICollectionViewCompositionalLayout { (_, _) -> NSCollectionLayoutSection? in
+            let space: CGFloat = 12
+            let width = self.view.bounds.width - (space * 2)
+
+            /// アイテムサイズ動的化のため
+            let heightDimension: NSCollectionLayoutDimension = .estimated(1)
+            let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(width), heightDimension: heightDimension)
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(200))   // TODO: - 高さを動的化
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: heightDimension)
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
             let section = NSCollectionLayoutSection(group: group)
-            section.contentInsets = .init(top: spacing, leading: spacing, bottom: spacing, trailing: spacing)
+            section.contentInsets = .init(top: space, leading: space, bottom: space, trailing: space)
             return section
         }
         collectionView.collectionViewLayout = layout
         view.addSubview(collectionView)
+        collectionView.snp.makeConstraints {
+            $0.top.equalTo(searchBar.snp.bottom)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            $0.left.equalToSuperview()
+            $0.right.equalToSuperview()
+        }
     }
 
-    private func configureDataSource() {
-        var snapshot = NSDiffableDataSourceSnapshot<SectionType, GithubRepository>()
-        snapshot.appendSections([.repositories])
-        dataSource.apply(snapshot, animatingDifferences: true)
-    }
-
-    /// GitHubAPIから正常にレスポンスを受け取れ場合レポジトリ一覧のデータ更新する
-    private func updateDataSource(repositories: [GithubRepository]) {
-        var snapShot = dataSource.snapshot()
-        snapShot.appendItems(repositories, toSection: .repositories)
-        dataSource.apply(snapShot, animatingDifferences: true)
-    }
+    // MARK: - function
 
     private func setupBinding() {
         viewModel.$state
@@ -99,9 +105,11 @@ class SearchRepositoryViewController: UIViewController {
             .sink { [weak self] state in
                 guard let self else { return }
                 switch state {
-                case .initial, .loading:
-                    // TODO: - ローディング画面
+                case .initial:
+                    resetDataSource()
+                case .loading:
                     break
+                    // TODO: - ローディング画面
                 case .success(let response):
                     let repositories = response.items
                     updateDataSource(repositories: repositories)
@@ -111,5 +119,58 @@ class SearchRepositoryViewController: UIViewController {
                 }
             }
             .store(in: &cancellables)
+    }
+
+}
+
+// MARK: - UICollectionView
+
+extension SearchRepositoryViewController {
+
+    private func configureDataSource() {
+        var snapshot = NSDiffableDataSourceSnapshot<SectionType, GithubRepository>()
+        snapshot.appendSections([.repositories])
+        dataSource.apply(snapshot, animatingDifferences: true)
+    }
+
+    private func resetDataSource() {
+        var snapShot = dataSource.snapshot()
+        snapShot.deleteAllItems()
+        snapShot.appendSections([.repositories])
+        dataSource.apply(snapShot, animatingDifferences: true)
+    }
+
+    /// GitHubAPIから正常にレスポンスを受け取れ場合レポジトリ一覧のデータ更新する
+    private func updateDataSource(repositories: [GithubRepository]) {
+        var snapShot = dataSource.snapshot()
+        snapShot.appendItems(repositories, toSection: .repositories)
+        dataSource.apply(snapShot, animatingDifferences: true)
+    }
+
+}
+
+// MARK: - UISearchBar
+
+extension SearchRepositoryViewController: UISearchBarDelegate {
+    // 検索バー編集開始時にキャンセルボタン有効化
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(true, animated: true)
+    }
+
+    // キャンセルボタンでキャセルボタン非表示
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        searchBar.setShowsCancelButton(false, animated: true)
+    }
+
+    // エンターキーで検索
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchWord = searchBar.text else { return }
+        Task {
+            try await viewModel.searchButtonTapped(searchWord: searchWord)
+        }
+
+        searchBar.resignFirstResponder()
+        searchBar.setShowsCancelButton(false, animated: true)
     }
 }

@@ -23,27 +23,37 @@ class RepositoryViewCell: UICollectionViewCell {
     // TODO: - Coreフォルダを作りUILabel(やフォントサイズなど)を共通化する
     private let repoName: UILabel = {
         let label: UILabel = .init()
-        label.font = .systemFont(ofSize: 18, weight: .regular)
+        label.font = .systemFont(ofSize: 16, weight: .bold)
         return label
     }()
 
     private let repoDescription: UILabel = {
         let label: UILabel = .init()
-        label.font = .systemFont(ofSize: 18, weight: .regular)
+        label.font = .systemFont(ofSize: 14, weight: .regular)
         label.numberOfLines = 0   // 高さ動的化のため
         return label
     }()
 
     private let stargazersCount: UILabel = {
         let label: UILabel = .init()
-        label.font = .systemFont(ofSize: 18, weight: .regular)
+        label.font = .systemFont(ofSize: 14, weight: .regular)
+        label.textColor = .gray
+        label.setContentHuggingPriority(.required, for: .horizontal)   // 領域拡大によるレイアウト崩れ防止
         return label
     }()
 
     private let language: UILabel = {
         let label: UILabel = .init()
-        label.font = .systemFont(ofSize: 18, weight: .regular)
+        label.font = .systemFont(ofSize: 14, weight: .regular)
+        label.textColor = .gray
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)   // 領域縮小によるレイアウト崩れ防止
         return label
+    }()
+
+    private let divider: UIView = {
+        let divider = UIView()
+        divider.backgroundColor = .systemGray5
+        return divider
     }()
 
     override init(frame: CGRect) {
@@ -53,27 +63,25 @@ class RepositoryViewCell: UICollectionViewCell {
     }
 
     private func configureViewCell() {
-        addSubview(repoName)
-        repoName.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.width.equalToSuperview()   // 文字を折り返して表示するため
+        let space: CGFloat = 12
+        let horizontalStackView = UIStackView(arrangedSubviews: [stargazersCount, language])
+        horizontalStackView.axis = .horizontal
+        horizontalStackView.spacing = space
+
+        let stackView = UIStackView(arrangedSubviews: [repoName, repoDescription, horizontalStackView])
+        stackView.axis = .vertical
+        stackView.spacing = space
+        contentView.addSubview(stackView)
+        stackView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview()
+            $0.verticalEdges.equalToSuperview().inset(space).priority(.low)   // collectionViewの動的なアイテムサイズ(.estimated(1))が原因で Auto Layout の競合が発生したため、垂直方向の制約の優先度を下げて (priority(.low)) 、競合を解決
         }
 
-        addSubview(repoDescription)
-        repoDescription.sizeToFit()
-        repoDescription.snp.makeConstraints {
-            $0.top.equalTo(repoName.snp.bottom).offset(12)
-            $0.width.equalToSuperview()
-        }
-
-        addSubview(stargazersCount)
-        stargazersCount.snp.makeConstraints {
-            $0.top.equalTo(repoDescription.snp.bottom).offset(12)
-        }
-
-        addSubview(language)
-        language.snp.makeConstraints {
-            $0.top.equalTo(stargazersCount.snp.bottom).offset(12)
+        contentView.addSubview(divider)
+        divider.snp.makeConstraints {
+            $0.top.equalTo(stackView.snp.bottom).offset(space)   // stackViewの上下に余白を12とっているためoffsetで表示位置ずらしても問題ない
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(1)
         }
     }
 
@@ -84,7 +92,7 @@ class RepositoryViewCell: UICollectionViewCell {
     func setState(state: State) {
         repoName.text = state.repoName
         repoDescription.text = state.repoDescription
-        stargazersCount.text = "\(state.stargazersCount)"
-        language.text = state.language
+        stargazersCount.text = "⭐︎ \(state.stargazersCount)"
+        language.text = "✏︎ \(state.language)"
     }
 }
