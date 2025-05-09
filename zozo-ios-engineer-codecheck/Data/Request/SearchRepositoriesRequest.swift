@@ -32,7 +32,7 @@ struct SearchRepositoriesRequest: APIRequestProtocol {
     var method: HTTPMethod = .get
     var body: Data?
 
-    var urlQueryItem: URLQueryItem {
+    var urlQueryItem: URLQueryItem? {
         URLQueryItem(name: "q", value: searchWord)
     }
 }

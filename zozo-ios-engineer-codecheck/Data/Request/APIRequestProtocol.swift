@@ -14,7 +14,7 @@ protocol APIRequestProtocol {
     var baseURL: URL { get }
     var path: String { get }
     var method: HTTPMethod { get }
-    var urlQueryItem: URLQueryItem { get }  // https://〜?hoge=1&hage=2 のクエリ
+    var urlQueryItem: URLQueryItem? { get }  // https://〜?hoge=1&hage=2 のクエリ
     var body: Data? { get }
 }
 
@@ -30,7 +30,9 @@ extension APIRequestProtocol {
 
         switch method {
         case .get:
-            components?.queryItems = [urlQueryItem]
+            if let urlQueryItem = urlQueryItem {
+                components?.queryItems = [urlQueryItem]
+            }
             urlRequest.url = components?.url
             return urlRequest
         case .post:
