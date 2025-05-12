@@ -9,16 +9,20 @@ import Foundation
 
 // MARK: - protocol
 
+@MainActor
 protocol RepositoryDetailViewModelIntput {
     func viewDidLoad() async throws
 }
 
+@MainActor
 protocol RepositoryDetailViewModelOutput {
     var repositoryDetail: RepositoryDetailResponse? { get }
 }
 
+@MainActor
 protocol RepositoryDetailViewModelProtocol: RepositoryDetailViewModelIntput, RepositoryDetailViewModelOutput {}
 
+@MainActor
 final class RepositoryDetailViewModel: RepositoryDetailViewModelProtocol {
     @Published private(set) var repositoryDetail: RepositoryDetailResponse?
 
