@@ -115,11 +115,10 @@ Swiftには主に以下の3つの参照型があります。
 ## 6. メモリリークの検出
 
 -   **Xcodeのデバッグツール**: メモリグラフデバッガ (Memory Graph Debugger) を使用すると、オブジェクト間の参照関係を視覚的に確認でき、循環参照を発見するのに役立ちます。
--   **[XCTAssertNoLeak](https://github.com/tarunon/XCTAssertNoLeak)**: 対象のインスタンス内にメモリりーくが発生しているか検知する機能を持つライブラリを使い、メモリリークを検知する。
+-   **[XCTAssertNoLeak](https://github.com/tarunon/XCTAssertNoLeak)**: 対象のインスタンス内にメモリりーくが発生しているか検知する機能を持つライブラリを使い、メモリリークを検知します。
 
 
-## 7. 実際にメモリリーくの検出してみる
-
+実際にメモリリークを検出する場合は、以下のサイトを参考にする
 [参考](https://qiita.com/toya108/items/872568c1c9837caf3dfe#%E3%83%A1%E3%83%A2%E3%83%AA%E3%83%AA%E3%83%BC%E3%82%AF%E3%81%AE%E6%A4%9C%E7%9F%A5%E6%96%B9%E6%B3%95)
 
 **Memory graphを利用する**
