@@ -29,15 +29,15 @@ final class RepositoryDetailViewModel: RepositoryDetailViewModelProtocol {
     let owner: String
     let repo: String
     private let apiClient: APIClientProtocol
+    let request: RepositoryDetailRequest
     init(owner: String, repo: String, apiClient: APIClientProtocol) {
         self.owner = owner
         self.repo = repo
         self.apiClient = apiClient
+        self.request = .init(owner: owner, repo: repo)
     }
 
     func viewDidLoad() async {
-        let request: RepositoryDetailRequest = .init(owner: owner, repo: repo)
-
         do {
             let response: Result<RepositoryDetailResponse, HTTPError> = try await apiClient.request(apiRequest: request)
             switch response {
