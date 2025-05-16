@@ -7,11 +7,11 @@
 
 import Foundation
 
-protocol APIClientProtocol {
+protocol APIClientProtocol: Sendable {
     func request<D: Decodable>(apiRequest: any APIRequestProtocol) async throws -> Result<D, HTTPError>
 }
 
-class APIClient: APIClientProtocol {
+final class APIClient: APIClientProtocol {
     /// APIから取得したJSONを変換するためのDecoder
     ///
     /// `total_count -> totalCount`
