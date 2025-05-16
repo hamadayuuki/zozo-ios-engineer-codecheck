@@ -11,7 +11,13 @@ import Kingfisher
 import Combine
 
 class RepositoryDetailViewController: UIViewController {
-    let viewModel: RepositoryDetailViewModel = .init(owner: "swiftlang", repo: "swift", apiClient: APIClient())
+    let viewModel: RepositoryDetailViewModel
+    init(viewModel: RepositoryDetailViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    required init?(coder: NSCoder) { fatalError() }
+
     private var cancellables = Set<AnyCancellable>()
 
     // MARK: - UI components
