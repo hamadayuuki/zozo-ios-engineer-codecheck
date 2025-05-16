@@ -39,11 +39,13 @@ final class RepositoryDetailViewModel: RepositoryDetailViewModelProtocol {
 
     func viewDidLoad() async {
         do {
-            let response: Result<RepositoryDetailResponse, HTTPError> = try await apiClient.request(apiRequest: request)
-            switch response {
+            let result: Result<RepositoryDetailResponse, HTTPError> = try await apiClient.request(apiRequest: request)
+            switch result {
             case .success(let response):
                 print(response)
-                repositoryDetail = response
+                var newResponse = response
+                newResponse.updatedAt = newResponse.updatedAt.formatDateString()   // TODO: Translator実装
+                repositoryDetail = newResponse
             case .failure(let error):
                 let errorDescription = error.errorDescription
                 print(errorDescription)
