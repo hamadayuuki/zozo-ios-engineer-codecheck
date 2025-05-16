@@ -10,18 +10,6 @@ import SnapKit
 import Kingfisher
 import Combine
 
-// モック用に作成
-// 今後APIからのレスポンスを定義し、以下のRepositoryは削除
-struct Repository {
-    let thumbnail_url: String
-    let name: String
-    let owner: String
-    let description: String
-    let stars: Int
-    let forks: Int
-    let language: String
-}
-
 class RepositoryDetailViewController: UIViewController {
     let viewModel: RepositoryDetailViewModel = .init(owner: "swiftlang", repo: "swift", apiClient: APIClient())
     private var cancellables = Set<AnyCancellable>()
