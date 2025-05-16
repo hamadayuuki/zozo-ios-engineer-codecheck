@@ -16,7 +16,7 @@ struct RepositoryDetailRequest: APIRequestProtocol {
         self.repo = repo
     }
 
-    typealias Response = SearchRepositoriesResponse
+    typealias Response = RepositoryDetailResponse
 
     // MARK: - APIRequestProtocol
 
