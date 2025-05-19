@@ -11,7 +11,7 @@ import Kingfisher
 import Combine
 
 class RepositoryDetailViewController: UIViewController {
-    let viewModel: RepositoryDetailViewModel
+    private let viewModel: RepositoryDetailViewModel
     init(viewModel: RepositoryDetailViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
