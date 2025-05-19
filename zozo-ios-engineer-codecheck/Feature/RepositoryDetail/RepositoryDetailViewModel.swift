@@ -26,13 +26,9 @@ protocol RepositoryDetailViewModelProtocol: RepositoryDetailViewModelIntput, Rep
 final class RepositoryDetailViewModel: RepositoryDetailViewModelProtocol {
     @Published private(set) var repositoryDetail: RepositoryDetailResponse?
 
-    let owner: String
-    let repo: String
     private let apiClient: APIClientProtocol
     let request: RepositoryDetailRequest
     init(owner: String, repo: String, apiClient: APIClientProtocol) {
-        self.owner = owner
-        self.repo = repo
         self.apiClient = apiClient
         self.request = .init(owner: owner, repo: repo)
     }
