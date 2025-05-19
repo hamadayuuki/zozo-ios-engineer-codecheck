@@ -13,6 +13,12 @@
 		49111C072C25193A009D66F8 /* SearchRepositoryViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49111C062C25193A009D66F8 /* SearchRepositoryViewModelTest.swift */; };
 		49111C112C25193A009D66F8 /* zozo_ios_engineer_codecheckUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49111C102C25193A009D66F8 /* zozo_ios_engineer_codecheckUITests.swift */; };
 		49111C132C25193A009D66F8 /* zozo_ios_engineer_codecheckUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49111C122C25193A009D66F8 /* zozo_ios_engineer_codecheckUITestsLaunchTests.swift */; };
+		493468532DCB31C6001B6A95 /* RepositoryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493468522DCB31C6001B6A95 /* RepositoryDetailViewController.swift */; };
+		493468562DCB3A8F001B6A95 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 493468552DCB3A8F001B6A95 /* Kingfisher */; };
+		493468592DCB42AB001B6A95 /* RepositoryDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493468582DCB42AB001B6A95 /* RepositoryDetailViewModel.swift */; };
+		4934685B2DCB45BC001B6A95 /* RepositoryDetailRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4934685A2DCB45BC001B6A95 /* RepositoryDetailRequest.swift */; };
+		4934685D2DCB48E5001B6A95 /* RepositoryDetailResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4934685C2DCB48E5001B6A95 /* RepositoryDetailResponse.swift */; };
+		493489FA2DD7466E001B6A95 /* String+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493489F92DD74666001B6A95 /* String+extension.swift */; };
 		49AC1FFE2DC324A30026D2F4 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 49AC1FFD2DC324A30026D2F4 /* SnapKit */; };
 		49CD8F4E2C2A5F5700E78E9E /* SearchRepositoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CD8F4D2C2A5F5700E78E9E /* SearchRepositoryViewController.swift */; };
 		49CD8F502C2A719500E78E9E /* SearchRepositoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CD8F4F2C2A719500E78E9E /* SearchRepositoryViewModel.swift */; };
@@ -53,6 +59,11 @@
 		49111C0C2C25193A009D66F8 /* zozo-ios-engineer-codecheckUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "zozo-ios-engineer-codecheckUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49111C102C25193A009D66F8 /* zozo_ios_engineer_codecheckUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = zozo_ios_engineer_codecheckUITests.swift; sourceTree = "<group>"; };
 		49111C122C25193A009D66F8 /* zozo_ios_engineer_codecheckUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = zozo_ios_engineer_codecheckUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		493468522DCB31C6001B6A95 /* RepositoryDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDetailViewController.swift; sourceTree = "<group>"; };
+		493468582DCB42AB001B6A95 /* RepositoryDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDetailViewModel.swift; sourceTree = "<group>"; };
+		4934685A2DCB45BC001B6A95 /* RepositoryDetailRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDetailRequest.swift; sourceTree = "<group>"; };
+		4934685C2DCB48E5001B6A95 /* RepositoryDetailResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDetailResponse.swift; sourceTree = "<group>"; };
+		493489F92DD74666001B6A95 /* String+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+extension.swift"; sourceTree = "<group>"; };
 		49CD8F4D2C2A5F5700E78E9E /* SearchRepositoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepositoryViewController.swift; sourceTree = "<group>"; };
 		49CD8F4F2C2A719500E78E9E /* SearchRepositoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepositoryViewModel.swift; sourceTree = "<group>"; };
 		49CD8F522C2E4BF100E78E9E /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
@@ -69,6 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				493468562DCB3A8F001B6A95 /* Kingfisher in Frameworks */,
 				49AC1FFE2DC324A30026D2F4 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -113,6 +125,7 @@
 		49111BEE2C251938009D66F8 /* zozo-ios-engineer-codecheck */ = {
 			isa = PBXGroup;
 			children = (
+				493489F82DD74643001B6A95 /* Extension */,
 				49111BEF2C251938009D66F8 /* AppDelegate.swift */,
 				49111BF12C251938009D66F8 /* SceneDelegate.swift */,
 				49CD8F512C2E4B4300E78E9E /* Data */,
@@ -140,6 +153,23 @@
 			path = "zozo-ios-engineer-codecheckUITests";
 			sourceTree = "<group>";
 		};
+		493468512DCB31AF001B6A95 /* RepositoryDetail */ = {
+			isa = PBXGroup;
+			children = (
+				493468522DCB31C6001B6A95 /* RepositoryDetailViewController.swift */,
+				493468582DCB42AB001B6A95 /* RepositoryDetailViewModel.swift */,
+			);
+			path = RepositoryDetail;
+			sourceTree = "<group>";
+		};
+		493489F82DD74643001B6A95 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				493489F92DD74666001B6A95 /* String+extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		49CD8F512C2E4B4300E78E9E /* Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -156,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				49CD8F5C2C2E83FE00E78E9E /* SearchRepositoriesResponse.swift */,
+				4934685C2DCB48E5001B6A95 /* RepositoryDetailResponse.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -165,6 +196,7 @@
 			children = (
 				49CD8F542C2E4C4F00E78E9E /* APIRequestProtocol.swift */,
 				49CD8F5A2C2E83CC00E78E9E /* SearchRepositoriesRequest.swift */,
+				4934685A2DCB45BC001B6A95 /* RepositoryDetailRequest.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -172,6 +204,7 @@
 		49CD8F602C35252B00E78E9E /* Feature */ = {
 			isa = PBXGroup;
 			children = (
+				493468512DCB31AF001B6A95 /* RepositoryDetail */,
 				49CD8F612C35253500E78E9E /* SearchRepository */,
 			);
 			path = Feature;
@@ -206,6 +239,7 @@
 			name = "zozo-ios-engineer-codecheck";
 			packageProductDependencies = (
 				49AC1FFD2DC324A30026D2F4 /* SnapKit */,
+				493468552DCB3A8F001B6A95 /* Kingfisher */,
 			);
 			productName = "zozo-ios-engineer-codecheck";
 			productReference = 49111BEC2C251938009D66F8 /* zozo-ios-engineer-codecheck.app */;
@@ -281,6 +315,7 @@
 			mainGroup = 49111BE32C251938009D66F8;
 			packageReferences = (
 				49AC1FFC2DC324A30026D2F4 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				493468542DCB3A8F001B6A95 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 49111BED2C251938009D66F8 /* Products */;
 			projectDirPath = "";
@@ -345,7 +380,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				493489FA2DD7466E001B6A95 /* String+extension.swift in Sources */,
 				49CD8F502C2A719500E78E9E /* SearchRepositoryViewModel.swift in Sources */,
+				493468532DCB31C6001B6A95 /* RepositoryDetailViewController.swift in Sources */,
+				493468592DCB42AB001B6A95 /* RepositoryDetailViewModel.swift in Sources */,
 				49CD8F5B2C2E83CC00E78E9E /* SearchRepositoriesRequest.swift in Sources */,
 				49CD8F572C2E573700E78E9E /* APIClient.swift in Sources */,
 				49CD8F592C2E581500E78E9E /* HTTPError.swift in Sources */,
@@ -353,8 +391,10 @@
 				49CD8F4E2C2A5F5700E78E9E /* SearchRepositoryViewController.swift in Sources */,
 				49CD8F662C36A06B00E78E9E /* RepositoryViewCell.swift in Sources */,
 				49111BF02C251938009D66F8 /* AppDelegate.swift in Sources */,
+				4934685D2DCB48E5001B6A95 /* RepositoryDetailResponse.swift in Sources */,
 				49CD8F532C2E4BF100E78E9E /* HTTPMethod.swift in Sources */,
 				49CD8F552C2E4C4F00E78E9E /* APIRequestProtocol.swift in Sources */,
+				4934685B2DCB45BC001B6A95 /* RepositoryDetailRequest.swift in Sources */,
 				49111BF22C251938009D66F8 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -691,6 +731,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		493468542DCB3A8F001B6A95 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.3.2;
+			};
+		};
 		49AC1FFC2DC324A30026D2F4 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -702,6 +750,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		493468552DCB3A8F001B6A95 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 493468542DCB3A8F001B6A95 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
 		49AC1FFD2DC324A30026D2F4 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 49AC1FFC2DC324A30026D2F4 /* XCRemoteSwiftPackageReference "SnapKit" */;
