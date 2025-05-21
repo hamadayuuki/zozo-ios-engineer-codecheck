@@ -15,6 +15,7 @@ struct GithubRepository: Decodable, Hashable {
     var id: Int
     var name: String
     var fullName: String
+    var owner: Owner
     var htmlUrl: String
     var description: String?
     var language: String?
@@ -22,6 +23,11 @@ struct GithubRepository: Decodable, Hashable {
     var watchersCount: Int
     var createdAt: String
     var updatedAt: String
+
+    struct Owner: Decodable, Hashable {
+        var id: Int
+        var login: String   // owner name
+    }
 }
 
 // MARK: - for test
@@ -32,7 +38,7 @@ extension SearchRepositoriesResponse {
     /// length で受け取った長さ分のリストを返却
     static func stub(length: Int = 1) -> Self {
         .init(items: Array(repeating: (), count: length).enumerated().map { index, _ -> GithubRepository in
-            GithubRepository(id: index, name: "hoge", fullName: "hoge/hoge", htmlUrl: "", description: "hoge hoge hoge", language: "swift", stargazersCount: 100, watchersCount: 100, createdAt: "", updatedAt: "")
+            GithubRepository(id: index, name: "hoge", fullName: "hoge/hoge", owner: .init(id: 0, login: "owner"), htmlUrl: "", description: "hoge hoge hoge", language: "swift", stargazersCount: 100, watchersCount: 100, createdAt: "", updatedAt: "")
         })
     }
 }
