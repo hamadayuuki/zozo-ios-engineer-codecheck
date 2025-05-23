@@ -10,8 +10,10 @@ import UIKit
 // 各画面ごとに wireframe を実装して画面遷移する
 @MainActor
 protocol WireframeProtocol {
+    associatedtype Input
+
     /// 遷移先画面を構築する
-    func nextVC() -> UIViewController
+    func nextVC(_ input: Input) -> UIViewController
     /// 画面遷移を担当
     func translation(navigationController: UINavigationController?, nextVC: UIViewController)
 }

@@ -9,16 +9,11 @@ import UIKit
 
 @MainActor
 final class SearchRepositoryWireframe: WireframeProtocol {
-    let owner: String
-    let repo: String
-    init(owner: String, repo: String) {
-        self.owner = owner
-        self.repo = repo
-    }
+    typealias Input = (owner: String, repo: String)
 
-    func nextVC() -> UIViewController {
+    func nextVC(_ input: Input) -> UIViewController {
         let apiClient: APIClient = .init()
-        let repositoryDetailViewModel: RepositoryDetailViewModel = .init(owner: owner, repo: repo, apiClient: apiClient)
+        let repositoryDetailViewModel: RepositoryDetailViewModel = .init(owner: input.owner, repo: input.repo, apiClient: apiClient)
         let repositoryDetailViewController = RepositoryDetailViewController(viewModel: repositoryDetailViewModel)
         return repositoryDetailViewController
     }
