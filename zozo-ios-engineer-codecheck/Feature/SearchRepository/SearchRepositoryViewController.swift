@@ -39,6 +39,7 @@ class SearchRepositoryViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        collectionView.delegate = self   // UICollectionViewDelegate
 
         view.backgroundColor = .white
         configureDataSource()
@@ -147,6 +148,15 @@ extension SearchRepositoryViewController {
         dataSource.apply(snapShot, animatingDifferences: true)
     }
 
+}
+
+extension SearchRepositoryViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let repository = dataSource.itemIdentifier(for: indexPath) else { return }
+        let wireframe: SearchRepositoryWireframe = .init()
+        let nextVC = wireframe.nextVC(SearchRepositoryWireframe.Input(owner: repository.owner.login, repo: repository.name))
+        wireframe.translation(navigationController: navigationController, nextVC: nextVC)
+    }
 }
 
 // MARK: - UISearchBar
