@@ -20,6 +20,8 @@ class RepositoryViewCell: UICollectionViewCell {
         let language: String
     }
 
+    var tappedStarButton: ((RepositoryViewCell) -> Void)?
+
     // TODO: - Coreフォルダを作りUILabel(やフォントサイズなど)を共通化する
     private let repoName: UILabel = {
         let label: UILabel = .init()
@@ -56,10 +58,21 @@ class RepositoryViewCell: UICollectionViewCell {
         return divider
     }()
 
+    let starButton: UIButton = {
+        let button = UIButton(type: .system)
+        let config = UIImage.SymbolConfiguration(pointSize: 25, weight: .regular)
+        let starImage = UIImage(systemName: "star.fill", withConfiguration: config)
+        button.setImage(starImage, for: .normal)
+        button.tintColor = .systemYellow
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
     override init(frame: CGRect) {
         super.init(frame: .zero)
 
         configureViewCell()
+        configureAction()
     }
 
     private func configureViewCell() {
@@ -68,7 +81,7 @@ class RepositoryViewCell: UICollectionViewCell {
         horizontalStackView.axis = .horizontal
         horizontalStackView.spacing = space
 
-        let stackView = UIStackView(arrangedSubviews: [repoName, repoDescription, horizontalStackView])
+        let stackView = UIStackView(arrangedSubviews: [repoName, repoDescription, horizontalStackView, starButton])
         stackView.axis = .vertical
         stackView.spacing = space
         contentView.addSubview(stackView)
@@ -83,6 +96,19 @@ class RepositoryViewCell: UICollectionViewCell {
             $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(1)
         }
+
+        starButton.snp.makeConstraints {
+            $0.width.equalTo(44)
+            $0.height.equalTo(44)
+        }
+    }
+
+    private func configureAction() {
+        let starButtonAction = UIAction { [weak self] _ in
+            guard let self = self else { return }
+            self.tappedStarButton?(self)
+        }
+        starButton.addAction(starButtonAction, for: .touchUpInside)
     }
 
     required init?(coder: NSCoder) {

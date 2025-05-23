@@ -25,6 +25,13 @@ class SearchRepositoryViewController: UIViewController {
                 language: repository.language ?? ""
             )
             cell.setState(state: cellState)
+            cell.tappedStarButton = { [weak self] tappedCell in
+                guard let self else { return }
+
+                if let tappedCellIndex = self.collectionView.indexPath(for: tappedCell) {
+                    self.viewModel.tappedStarButton(tappedCellIndex: tappedCellIndex.row)
+                }
+            }
         }
 
         return .init(
