@@ -153,8 +153,8 @@ extension SearchRepositoryViewController {
 extension SearchRepositoryViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let repository = dataSource.itemIdentifier(for: indexPath) else { return }
-        let wireframe: SearchRepositoryWireframe = .init(owner: repository.owner.login, repo: repository.name)
-        let nextVC = wireframe.nextVC()
+        let wireframe: SearchRepositoryWireframe = .init()
+        let nextVC = wireframe.nextVC(SearchRepositoryWireframe.Input(owner: repository.owner.login, repo: repository.name))
         wireframe.translation(navigationController: navigationController, nextVC: nextVC)
     }
 }
