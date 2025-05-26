@@ -18,6 +18,7 @@ class RepositoryViewCell: UICollectionViewCell {
         let repoDescription: String
         let stargazersCount: Int
         let language: String
+        var isStared: Bool
     }
 
     var tappedStarButton: ((RepositoryViewCell) -> Void)?

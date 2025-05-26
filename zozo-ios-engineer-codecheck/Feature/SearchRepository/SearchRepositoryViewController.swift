@@ -22,14 +22,17 @@ class SearchRepositoryViewController: UIViewController {
                 repoName: repository.fullName,
                 repoDescription: repository.description ?? "",
                 stargazersCount: repository.stargazersCount,
-                language: repository.language ?? ""
+                language: repository.language ?? "",
+                isStared: repository.isStarred
             )
             cell.setState(state: cellState)
             cell.tappedStarButton = { [weak self] tappedCell in
                 guard let self else { return }
 
                 if let tappedCellIndex = self.collectionView.indexPath(for: tappedCell) {
-                    self.viewModel.tappedStarButton(tappedCellIndex: tappedCellIndex.row)
+                    Task {
+                        let _ = await self.viewModel.tappedStarButton(tappedCellIndex: tappedCellIndex.row)
+                    }
                 }
             }
         }
