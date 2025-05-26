@@ -30,6 +30,7 @@ struct SearchRepositoriesRequest: APIRequestProtocol {
 
     var path: String = "/search/repositories"
     var method: HTTPMethod = .get
+    var headers: [String: String] = [:]
     var body: Data?
 
     var urlQueryItem: URLQueryItem? {
