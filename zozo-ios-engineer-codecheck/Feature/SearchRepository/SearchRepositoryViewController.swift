@@ -31,7 +31,7 @@ class SearchRepositoryViewController: UIViewController {
 
                 if let tappedCellIndex = self.collectionView.indexPath(for: tappedCell) {
                     Task {
-                        let _ = await self.viewModel.tappedStarButton(tappedCellIndex: tappedCellIndex.row)
+                        let _ = await self.viewModel.starButtonTapped(tappedCellIndex: tappedCellIndex.row)
                     }
                 }
             }

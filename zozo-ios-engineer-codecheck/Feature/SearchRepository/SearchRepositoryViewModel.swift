@@ -12,7 +12,7 @@ import Foundation
 // アクセスレベルは他のファイルから呼び出せるように設定
 protocol SearchRepositoryViewModelInput {
     func searchButtonTapped(searchWord: String) async throws
-    func tappedStarButton(tappedCellIndex: Int) async
+    func starButtonTapped(tappedCellIndex: Int) async
 }
 
 protocol SearchRepositoryViewModelOutput {
@@ -64,7 +64,7 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelProtocol {
     }
 
     @MainActor
-    func tappedStarButton(tappedCellIndex: Int) async {
+    func starButtonTapped(tappedCellIndex: Int) async {
         switch state {
         case .success(var repositories):
             let addStarToRepositoryRequest: AddStarToRepositoryRequest = .init(owner: repositories.items[tappedCellIndex].owner.login, repo: repositories.items[tappedCellIndex].name)
