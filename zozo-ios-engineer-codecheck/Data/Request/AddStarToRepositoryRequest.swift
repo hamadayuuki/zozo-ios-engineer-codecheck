@@ -24,7 +24,7 @@ struct AddStarToRepositoryRequest: APIRequestProtocol {
     }
 
     var path: String {
-        "user/starred/\(self.owner)/\(self.repo)"
+        "/user/starred/\(self.owner)/\(self.repo)"
     }
 
     var method: HTTPMethod = .put

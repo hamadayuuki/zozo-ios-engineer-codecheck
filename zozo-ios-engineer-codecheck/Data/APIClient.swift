@@ -39,6 +39,10 @@ final class APIClient: APIClientProtocol {
 
         switch httpStatus.statusCode {
         case 200..<300:
+            // PUT or DELETE 通信の場合
+            if httpStatus.statusCode == 204 && D.self == EmptyResponse.self {
+                return .success(EmptyResponse() as! D)
+            }
             do {
                 let decodedData = try decoder.decode(D.self, from: data)
                 return .success(decodedData)

@@ -23,8 +23,6 @@ struct GithubRepository: Decodable, Hashable {
     var watchersCount: Int
     var createdAt: String
     var updatedAt: String
-    // GitHub API には存在しないので、自前で実装して変数を更新する必要ある
-    var isStarred: Bool = false   // TODO: Translatorを実装し、追加する
 
     struct Owner: Decodable, Hashable {
         var id: Int
