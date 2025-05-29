@@ -18,7 +18,10 @@ class RepositoryViewCell: UICollectionViewCell {
         let repoDescription: String
         let stargazersCount: Int
         let language: String
+        var isStared: Bool
     }
+
+    var tappedStarButton: ((RepositoryViewCell) -> Void)?
 
     // TODO: - Coreフォルダを作りUILabel(やフォントサイズなど)を共通化する
     private let repoName: UILabel = {
@@ -56,15 +59,23 @@ class RepositoryViewCell: UICollectionViewCell {
         return divider
     }()
 
+    let starButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.tintColor = .systemYellow
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
     override init(frame: CGRect) {
         super.init(frame: .zero)
 
         configureViewCell()
+        configureAction()
     }
 
     private func configureViewCell() {
         let space: CGFloat = 12
-        let horizontalStackView = UIStackView(arrangedSubviews: [stargazersCount, language])
+        let horizontalStackView = UIStackView(arrangedSubviews: [starButton, stargazersCount, language])
         horizontalStackView.axis = .horizontal
         horizontalStackView.spacing = space
 
@@ -83,6 +94,19 @@ class RepositoryViewCell: UICollectionViewCell {
             $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(1)
         }
+
+        starButton.snp.makeConstraints {
+            $0.width.equalTo(22)
+            $0.height.equalTo(22)
+        }
+    }
+
+    private func configureAction() {
+        let starButtonAction = UIAction { [weak self] _ in
+            guard let self = self else { return }
+            self.tappedStarButton?(self)
+        }
+        starButton.addAction(starButtonAction, for: .touchUpInside)
     }
 
     required init?(coder: NSCoder) {
@@ -92,7 +116,9 @@ class RepositoryViewCell: UICollectionViewCell {
     func setState(state: State) {
         repoName.text = state.repoName
         repoDescription.text = state.repoDescription
-        stargazersCount.text = "⭐︎ \(state.stargazersCount)"
+        stargazersCount.text = "\(state.stargazersCount)"
         language.text = "✏︎ \(state.language)"
+        let starImage = UIImage(systemName: state.isStared ? "star.fill" : "star")
+        starButton.setImage(starImage, for: .normal)
     }
 }

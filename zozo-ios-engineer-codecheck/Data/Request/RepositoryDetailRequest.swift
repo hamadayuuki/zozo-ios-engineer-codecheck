@@ -29,6 +29,7 @@ struct RepositoryDetailRequest: APIRequestProtocol {
         "/repos/\(self.owner)/\(self.repo)"
     }
     var method: HTTPMethod = .get
+    var headers: [String: String] = [:]
     var body: Data?
 
     var urlQueryItem: URLQueryItem? = nil

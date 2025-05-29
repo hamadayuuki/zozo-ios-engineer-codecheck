@@ -12,6 +12,7 @@ import Foundation
 // アクセスレベルは他のファイルから呼び出せるように設定
 protocol SearchRepositoryViewModelInput {
     func searchButtonTapped(searchWord: String) async throws
+    func starButtonTapped(tappedCellIndex: Int) async
 }
 
 protocol SearchRepositoryViewModelOutput {
@@ -26,7 +27,7 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelProtocol {
     enum State: Equatable {
         case initial   // init だと競合
         case loading
-        case success(SearchRepositoriesResponse)
+        case success(Repositories)
         case error(String)
     }
 
@@ -51,6 +52,7 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelProtocol {
             let response: Result<SearchRepositoriesResponse, HTTPError> = try await apiClient.request(apiRequest: searchRepoRequest)
             switch response {
             case .success(let repositories):
+                let repositories: Repositories = SearchRepositoryTranslator.translate(input: repositories)
                 state = .success(repositories)
             case .failure(let error):
                 let errorDescription = error.errorDescription
@@ -58,6 +60,32 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelProtocol {
             }
         } catch {
             state = .error(error.localizedDescription)
+        }
+    }
+
+    @MainActor
+    func starButtonTapped(tappedCellIndex: Int) async {
+        switch state {
+        case .success(var repositories):
+            let addStarToRepositoryRequest: AddStarToRepositoryRequest = .init(owner: repositories.items[tappedCellIndex].owner.login, repo: repositories.items[tappedCellIndex].name)
+            do {
+                let response: Result<EmptyResponse, HTTPError> = try await apiClient.request(apiRequest: addStarToRepositoryRequest)
+                switch response {
+                case .success(_):
+                    // TODO: スター解除機能を実装したら、リファクタリング検討する
+                    if !repositories.items[tappedCellIndex].isStarred {
+                        repositories.items[tappedCellIndex].stargazersCount += 1
+                        repositories.items[tappedCellIndex].isStarred = true
+                    }
+                    state = .success(repositories)
+                case .failure(let error):
+                    print(error.errorDescription)   // TODO: エラーを画面に表示
+                }
+            } catch {
+
+            }
+        case .initial, .loading, .error:
+            print("")
         }
     }
 }
