@@ -72,7 +72,11 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelProtocol {
                 let response: Result<EmptyResponse, HTTPError> = try await apiClient.request(apiRequest: addStarToRepositoryRequest)
                 switch response {
                 case .success(_):
-                    repositories.items[tappedCellIndex].isStarred.toggle()
+                    // TODO: スター解除機能を実装したら、リファクタリング検討する
+                    if !repositories.items[tappedCellIndex].isStarred {
+                        repositories.items[tappedCellIndex].stargazersCount += 1
+                        repositories.items[tappedCellIndex].isStarred = true
+                    }
                     state = .success(repositories)
                 case .failure(let error):
                     print(error.errorDescription)   // TODO: エラーを画面に表示

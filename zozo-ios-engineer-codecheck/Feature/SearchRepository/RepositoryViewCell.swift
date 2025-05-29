@@ -61,9 +61,6 @@ class RepositoryViewCell: UICollectionViewCell {
 
     let starButton: UIButton = {
         let button = UIButton(type: .system)
-        let config = UIImage.SymbolConfiguration(pointSize: 25, weight: .regular)
-        let starImage = UIImage(systemName: "star.fill", withConfiguration: config)
-        button.setImage(starImage, for: .normal)
         button.tintColor = .systemYellow
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -78,11 +75,11 @@ class RepositoryViewCell: UICollectionViewCell {
 
     private func configureViewCell() {
         let space: CGFloat = 12
-        let horizontalStackView = UIStackView(arrangedSubviews: [stargazersCount, language])
+        let horizontalStackView = UIStackView(arrangedSubviews: [starButton, stargazersCount, language])
         horizontalStackView.axis = .horizontal
         horizontalStackView.spacing = space
 
-        let stackView = UIStackView(arrangedSubviews: [repoName, repoDescription, horizontalStackView, starButton])
+        let stackView = UIStackView(arrangedSubviews: [repoName, repoDescription, horizontalStackView])
         stackView.axis = .vertical
         stackView.spacing = space
         contentView.addSubview(stackView)
@@ -99,8 +96,8 @@ class RepositoryViewCell: UICollectionViewCell {
         }
 
         starButton.snp.makeConstraints {
-            $0.width.equalTo(44)
-            $0.height.equalTo(44)
+            $0.width.equalTo(22)
+            $0.height.equalTo(22)
         }
     }
 
@@ -119,7 +116,9 @@ class RepositoryViewCell: UICollectionViewCell {
     func setState(state: State) {
         repoName.text = state.repoName
         repoDescription.text = state.repoDescription
-        stargazersCount.text = "⭐︎ \(state.stargazersCount)"
+        stargazersCount.text = "\(state.stargazersCount)"
         language.text = "✏︎ \(state.language)"
+        let starImage = UIImage(systemName: state.isStared ? "star.fill" : "star")
+        starButton.setImage(starImage, for: .normal)
     }
 }
