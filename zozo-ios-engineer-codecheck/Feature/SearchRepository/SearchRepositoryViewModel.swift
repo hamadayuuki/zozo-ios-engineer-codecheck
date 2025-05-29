@@ -27,7 +27,7 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelProtocol {
     enum State: Equatable {
         case initial   // init だと競合
         case loading
-        case success(SearchRepositoriesResponse)
+        case success(Repositories)
         case error(String)
     }
 
@@ -52,6 +52,7 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelProtocol {
             let response: Result<SearchRepositoriesResponse, HTTPError> = try await apiClient.request(apiRequest: searchRepoRequest)
             switch response {
             case .success(let repositories):
+                let repositories: Repositories = SearchRepositoryTranslator.translate(input: repositories)
                 state = .success(repositories)
             case .failure(let error):
                 let errorDescription = error.errorDescription
@@ -72,6 +73,7 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelProtocol {
                 switch response {
                 case .success(_):
                     repositories.items[tappedCellIndex].isStarred.toggle()
+                    state = .success(repositories)
                 case .failure(let error):
                     print(error.errorDescription)   // TODO: エラーを画面に表示
                 }
