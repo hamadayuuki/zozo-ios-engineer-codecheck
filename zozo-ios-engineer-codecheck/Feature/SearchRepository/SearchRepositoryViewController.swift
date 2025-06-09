@@ -16,15 +16,25 @@ class SearchRepositoryViewController: UIViewController {
         case repositories
     }
 
-    private lazy var dataSource: UICollectionViewDiffableDataSource<SectionType, GithubRepository> =  {
-        let repositoryCell = UICollectionView.CellRegistration<RepositoryViewCell, GithubRepository>() { cell, _, repository in
+    private lazy var dataSource: UICollectionViewDiffableDataSource<SectionType, Repository> =  {
+        let repositoryCell = UICollectionView.CellRegistration<RepositoryViewCell, Repository>() { cell, _, repository in
             let cellState: RepositoryViewCell.State = .init(
                 repoName: repository.fullName,
                 repoDescription: repository.description ?? "",
                 stargazersCount: repository.stargazersCount,
-                language: repository.language ?? ""
+                language: repository.language ?? "",
+                isStared: repository.isStarred
             )
             cell.setState(state: cellState)
+            cell.tappedStarButton = { [weak self] tappedCell in
+                guard let self else { return }
+
+                if let tappedCellIndex = self.collectionView.indexPath(for: tappedCell) {
+                    Task {
+                        let _ = await self.viewModel.starButtonTapped(tappedCellIndex: tappedCellIndex.row)
+                    }
+                }
+            }
         }
 
         return .init(
@@ -129,7 +139,7 @@ class SearchRepositoryViewController: UIViewController {
 extension SearchRepositoryViewController {
 
     private func configureDataSource() {
-        var snapshot = NSDiffableDataSourceSnapshot<SectionType, GithubRepository>()
+        var snapshot = NSDiffableDataSourceSnapshot<SectionType, Repository>()
         snapshot.appendSections([.repositories])
         dataSource.apply(snapshot, animatingDifferences: true)
     }
@@ -142,8 +152,10 @@ extension SearchRepositoryViewController {
     }
 
     /// GitHubAPIから正常にレスポンスを受け取れ場合レポジトリ一覧のデータ更新する
-    private func updateDataSource(repositories: [GithubRepository]) {
+    private func updateDataSource(repositories: [Repository]) {
         var snapShot = dataSource.snapshot()
+        snapShot.deleteAllItems()
+        snapShot.appendSections([.repositories])
         snapShot.appendItems(repositories, toSection: .repositories)
         dataSource.apply(snapShot, animatingDifferences: true)
     }
