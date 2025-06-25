@@ -13,7 +13,7 @@
 		49111C072C25193A009D66F8 /* SearchRepositoryViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49111C062C25193A009D66F8 /* SearchRepositoryViewModelTest.swift */; };
 		49111C112C25193A009D66F8 /* zozo_ios_engineer_codecheckUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49111C102C25193A009D66F8 /* zozo_ios_engineer_codecheckUITests.swift */; };
 		49111C132C25193A009D66F8 /* zozo_ios_engineer_codecheckUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49111C122C25193A009D66F8 /* zozo_ios_engineer_codecheckUITestsLaunchTests.swift */; };
-		4919824C2DF6F4D700406CB5 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4919824B2DF6F4D700406CB5 /* ErrorMessage.swift */; };
+		4919824C2DF6F4D700406CB5 /* ErrorMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4919824B2DF6F4D700406CB5 /* ErrorMessageView.swift */; };
 		493468532DCB31C6001B6A95 /* RepositoryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493468522DCB31C6001B6A95 /* RepositoryDetailViewController.swift */; };
 		493468562DCB3A8F001B6A95 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 493468552DCB3A8F001B6A95 /* Kingfisher */; };
 		493468592DCB42AB001B6A95 /* RepositoryDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493468582DCB42AB001B6A95 /* RepositoryDetailViewModel.swift */; };
@@ -37,6 +37,7 @@
 		49CD8F5B2C2E83CC00E78E9E /* SearchRepositoriesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CD8F5A2C2E83CC00E78E9E /* SearchRepositoriesRequest.swift */; };
 		49CD8F5D2C2E83FE00E78E9E /* SearchRepositoriesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CD8F5C2C2E83FE00E78E9E /* SearchRepositoriesResponse.swift */; };
 		49CD8F662C36A06B00E78E9E /* RepositoryViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CD8F652C36A06B00E78E9E /* RepositoryViewCell.swift */; };
+		49D34A122E02B3C400563078 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D34A112E02B3C400563078 /* ErrorMessage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,7 +68,7 @@
 		49111C0C2C25193A009D66F8 /* zozo-ios-engineer-codecheckUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "zozo-ios-engineer-codecheckUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49111C102C25193A009D66F8 /* zozo_ios_engineer_codecheckUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = zozo_ios_engineer_codecheckUITests.swift; sourceTree = "<group>"; };
 		49111C122C25193A009D66F8 /* zozo_ios_engineer_codecheckUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = zozo_ios_engineer_codecheckUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		4919824B2DF6F4D700406CB5 /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
+		4919824B2DF6F4D700406CB5 /* ErrorMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessageView.swift; sourceTree = "<group>"; };
 		493468522DCB31C6001B6A95 /* RepositoryDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDetailViewController.swift; sourceTree = "<group>"; };
 		493468582DCB42AB001B6A95 /* RepositoryDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDetailViewModel.swift; sourceTree = "<group>"; };
 		4934685A2DCB45BC001B6A95 /* RepositoryDetailRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDetailRequest.swift; sourceTree = "<group>"; };
@@ -89,6 +90,7 @@
 		49CD8F5A2C2E83CC00E78E9E /* SearchRepositoriesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepositoriesRequest.swift; sourceTree = "<group>"; };
 		49CD8F5C2C2E83FE00E78E9E /* SearchRepositoriesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepositoriesResponse.swift; sourceTree = "<group>"; };
 		49CD8F652C36A06B00E78E9E /* RepositoryViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryViewCell.swift; sourceTree = "<group>"; };
+		49D34A112E02B3C400563078 /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,7 +176,7 @@
 		4919824A2DF6F4AD00406CB5 /* Component */ = {
 			isa = PBXGroup;
 			children = (
-				4919824B2DF6F4D700406CB5 /* ErrorMessage.swift */,
+				4919824B2DF6F4D700406CB5 /* ErrorMessageView.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -209,6 +211,7 @@
 			isa = PBXGroup;
 			children = (
 				49C6CB7F2DE5A3C3003052A4 /* Repositories.swift */,
+				49D34A112E02B3C400563078 /* ErrorMessage.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -432,9 +435,10 @@
 				49CD8F502C2A719500E78E9E /* SearchRepositoryViewModel.swift in Sources */,
 				493468532DCB31C6001B6A95 /* RepositoryDetailViewController.swift in Sources */,
 				493468592DCB42AB001B6A95 /* RepositoryDetailViewModel.swift in Sources */,
-				4919824C2DF6F4D700406CB5 /* ErrorMessage.swift in Sources */,
+				4919824C2DF6F4D700406CB5 /* ErrorMessageView.swift in Sources */,
 				49C6CB7D2DE5A2E9003052A4 /* SearchRepositoryTranslator.swift in Sources */,
 				49C6CB802DE5A3C3003052A4 /* Repositories.swift in Sources */,
+				49D34A122E02B3C400563078 /* ErrorMessage.swift in Sources */,
 				4984406C2DDDA98400AFB21A /* WireframeProtocol.swift in Sources */,
 				49CD8F5B2C2E83CC00E78E9E /* SearchRepositoriesRequest.swift in Sources */,
 				49CD8F572C2E573700E78E9E /* APIClient.swift in Sources */,

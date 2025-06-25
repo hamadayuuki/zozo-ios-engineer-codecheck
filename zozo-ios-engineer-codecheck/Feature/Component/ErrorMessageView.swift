@@ -1,5 +1,5 @@
 //
-//  ErrorMessage.swift
+//  ErrorMessageView.swift
 //  zozo-ios-engineer-codecheck
 //
 //  Created by yuki.hamada on 2025/06/09.
@@ -7,14 +7,8 @@
 
 import SwiftUI
 
-// TODO: - リファクタリング時にコードを移動する
-struct ErrorMessages {
-    var title: String
-    var description: String
-}
-
-struct ErrorMessage: View {
-    let errorMessage: ErrorMessages = .init(
+struct ErrorMessageView: View {
+    let errorMessage: ErrorMessage = .init(
         title: "エラーが発生しました",
         description: "エラーの原因はWi-Fiの不調？\nそれってあなたの感想ですよね"
     )
@@ -47,5 +41,5 @@ struct ErrorMessage: View {
 }
 
 #Preview {
-    ErrorMessage()
+    ErrorMessageView()
 }

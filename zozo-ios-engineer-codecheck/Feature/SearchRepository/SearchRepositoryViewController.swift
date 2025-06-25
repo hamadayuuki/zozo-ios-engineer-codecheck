@@ -124,14 +124,16 @@ class SearchRepositoryViewController: UIViewController {
                 case .success(let response):
                     let repositories = response.items
                     updateDataSource(repositories: repositories)
-                case .error(let errorDescription):
-                    print(errorDescription)
-                    // TODO: - エラー画面
+                case .error(let errorMessage):
+                    showErrorMessage(errorMessage: errorMessage)
                 }
             }
             .store(in: &cancellables)
     }
 
+    private func showErrorMessage(errorMessage: ErrorMessage) {
+
+    }
 }
 
 // MARK: - UICollectionView
