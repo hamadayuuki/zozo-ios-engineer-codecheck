@@ -52,7 +52,26 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelProtocol {
             let response: Result<SearchRepositoriesResponse, HTTPError> = try await apiClient.request(apiRequest: searchRepoRequest)
             switch response {
             case .success(let repositories):
-                let repositories: Repositories = SearchRepositoryTranslator.translate(input: repositories)
+                var repositories: Repositories = SearchRepositoryTranslator.translate(input: repositories)
+                try await withThrowingTaskGroup(of: (Int, Bool).self) { group in
+                    for (index, repo) in repositories.items.enumerated() {
+                        group.addTask {
+                            let starredRepositoryRequest: StarredRepositoryRequest = .init(owner: repo.owner.login, repo: repo.name)
+                            let isStarredRepository: Result<EmptyResponse, HTTPError> = try await self.apiClient.request(apiRequest: starredRepositoryRequest)
+                            switch isStarredRepository {
+                            case .success:
+                                return (index, true)
+                            case .failure(let error):
+                                print(error.localizedDescription)
+                                return (index, false)
+                            }
+                        }
+                    }
+                    for try await (index, starred) in group {
+                        repositories.items[index].isStarred = starred
+                    }
+                }
+
                 state = .success(repositories)
             case .failure(let error):
                 let errorDescription = error.errorDescription
