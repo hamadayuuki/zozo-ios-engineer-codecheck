@@ -5,7 +5,7 @@
 //  Created by yuki.hamada on 2024/06/25.
 //
 
-import UIKit
+import SwiftUI
 import Combine
 import SnapKit
 
@@ -132,7 +132,16 @@ class SearchRepositoryViewController: UIViewController {
     }
 
     private func showErrorMessage(errorMessage: ErrorMessage) {
-
+        let errorMessageUIHostingController = UIHostingController(
+            rootView: ErrorMessageView(errorMessage: errorMessage, dismiss: {
+                self.dismiss(animated: false)
+                self.updateDataSource(repositories: [])
+                self.searchBar.text = ""
+            })
+        )
+        errorMessageUIHostingController.modalPresentationStyle = .overFullScreen
+        errorMessageUIHostingController.view.backgroundColor = .clear
+        self.present(errorMessageUIHostingController, animated: false)
     }
 }
 
