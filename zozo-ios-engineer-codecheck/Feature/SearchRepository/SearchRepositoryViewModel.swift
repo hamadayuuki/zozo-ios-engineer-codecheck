@@ -10,19 +10,23 @@ import Foundation
 // MARK: - Protocol
 
 // アクセスレベルは他のファイルから呼び出せるように設定
+@MainActor
 protocol SearchRepositoryViewModelInput {
     func searchButtonTapped(searchWord: String) async throws
     func starButtonTapped(tappedCellIndex: Int) async
 }
 
+@MainActor
 protocol SearchRepositoryViewModelOutput {
     var state: SearchRepositoryViewModel.State { get }
 }
 
+@MainActor
 protocol SearchRepositoryViewModelProtocol: SearchRepositoryViewModelInput, SearchRepositoryViewModelOutput {}
 
 // MARK: - ViewModel
 
+@MainActor
 final class SearchRepositoryViewModel: SearchRepositoryViewModelProtocol {
     enum State: Equatable {
         case initial   // init だと競合
@@ -43,7 +47,6 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelProtocol {
 
     // MARK: - inputs
 
-    @MainActor
     func searchButtonTapped(searchWord: String) async throws {
         state = .initial
         state = .loading
@@ -61,7 +64,7 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelProtocol {
                             switch isStarredRepository {
                             case .success:
                                 return (index, true)
-                            case .failure(let error):
+                            case .failure(let _):
                                 return (index, false)
                             }
                         }
@@ -82,7 +85,6 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelProtocol {
         }
     }
 
-    @MainActor
     func starButtonTapped(tappedCellIndex: Int) async {
         switch state {
         case .success(var repositories):
