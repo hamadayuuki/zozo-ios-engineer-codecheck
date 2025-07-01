@@ -64,7 +64,7 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelProtocol {
                             switch isStarredRepository {
                             case .success:
                                 return (index, true)
-                            case .failure(let _):
+                            case .failure:
                                 return (index, false)
                             }
                         }
