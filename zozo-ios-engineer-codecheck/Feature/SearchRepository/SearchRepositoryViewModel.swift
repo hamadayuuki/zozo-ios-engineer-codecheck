@@ -62,7 +62,6 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelProtocol {
                             case .success:
                                 return (index, true)
                             case .failure(let error):
-                                print(error.localizedDescription)
                                 return (index, false)
                             }
                         }
