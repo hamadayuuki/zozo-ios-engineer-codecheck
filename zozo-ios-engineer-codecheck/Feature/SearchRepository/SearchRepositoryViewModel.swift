@@ -89,6 +89,7 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelProtocol {
         switch state {
         case .success(var repositories):
             if !repositories.items[tappedCellIndex].isStarred {
+                // リポジトリにスターを付与
                 let addStarToRepositoryRequest: AddStarToRepositoryRequest = .init(owner: repositories.items[tappedCellIndex].owner.login, repo: repositories.items[tappedCellIndex].name)
                 do {
                     let response: Result<EmptyResponse, HTTPError> = try await apiClient.request(apiRequest: addStarToRepositoryRequest)
@@ -105,6 +106,7 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelProtocol {
                     state = .error(.init(title: HTTPError.unknownError.title, description: HTTPError.unknownError.errorDescription))
                 }
             } else {
+                // リポジトリからスターを削除
                 let removeStarFromRepositoryRequest: RemoveStarFromRepositoryRequest = .init(owner: repositories.items[tappedCellIndex].owner.login, repo: repositories.items[tappedCellIndex].name)
                 do {
                     let response: Result<EmptyResponse, HTTPError> = try await apiClient.request(apiRequest: removeStarFromRepositoryRequest)
