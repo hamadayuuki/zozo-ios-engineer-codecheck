@@ -35,6 +35,26 @@ enum HTTPError: Error {
 
     case unknownError  // 未知のエラー
 
+    var title: String {
+        switch self {
+        // 通信・接続関連のエラー
+        case .responseError, .requestTimeout, .gatewayTimeout, .serviceUnavailable:
+            return "通信エラー"
+        // サーバー側の問題に起因するエラー
+        case .internalServerError, .notImplemented, .badGateway, .serverError:
+            return "サーバーエラー"
+        // クライアント側のリクエストに起因するエラー
+        case .badRequest, .unauthorized, .forbidden, .notFound, .methodNotAllowed, .conflict, .tooManyRequests, .clientError:
+            return "リクエストエラー"
+        // データの処理に関するエラー
+        case .decodeError:
+            return "データエラー"
+        // 上記のいずれにも分類されないエラー
+        case .unknownError:
+            return "不明なエラー"
+        }
+    }
+
     var errorDescription: String {
         switch self {
         case .responseError:

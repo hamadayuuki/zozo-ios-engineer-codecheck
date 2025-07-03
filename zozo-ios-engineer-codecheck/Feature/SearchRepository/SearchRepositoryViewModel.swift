@@ -28,7 +28,7 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelProtocol {
         case initial   // init だと競合
         case loading
         case success(Repositories)
-        case error(String)
+        case error(ErrorMessage)
     }
 
     private let apiClient: APIClientProtocol
@@ -56,10 +56,11 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelProtocol {
                 state = .success(repositories)
             case .failure(let error):
                 let errorDescription = error.errorDescription
-                state = .error(errorDescription)
+                let errorMessage: ErrorMessage = .init(title: "\(error.title)", description: errorDescription)
+                state = .error(errorMessage)
             }
         } catch {
-            state = .error(error.localizedDescription)
+            state = .error(.init(title: HTTPError.unknownError.title, description: HTTPError.unknownError.errorDescription))
         }
     }
 
@@ -79,10 +80,11 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelProtocol {
                     }
                     state = .success(repositories)
                 case .failure(let error):
-                    print(error.errorDescription)   // TODO: エラーを画面に表示
+                    let errorMessage: ErrorMessage = .init(title: "\(error.title)", description: error.errorDescription)
+                    state = .error(errorMessage)
                 }
             } catch {
-
+                state = .error(.init(title: HTTPError.unknownError.title, description: HTTPError.unknownError.errorDescription))
             }
         case .initial, .loading, .error:
             print("")

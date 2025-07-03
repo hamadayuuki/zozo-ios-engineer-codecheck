@@ -5,7 +5,7 @@
 //  Created by yuki.hamada on 2024/06/25.
 //
 
-import UIKit
+import SwiftUI
 import Combine
 import SnapKit
 
@@ -124,14 +124,25 @@ class SearchRepositoryViewController: UIViewController {
                 case .success(let response):
                     let repositories = response.items
                     updateDataSource(repositories: repositories)
-                case .error(let errorDescription):
-                    print(errorDescription)
-                    // TODO: - エラー画面
+                case .error(let errorMessage):
+                    showErrorMessage(errorMessage: errorMessage)
                 }
             }
             .store(in: &cancellables)
     }
 
+    private func showErrorMessage(errorMessage: ErrorMessage) {
+        let errorMessageUIHostingController = UIHostingController(
+            rootView: ErrorMessageView(errorMessage: errorMessage, dismiss: {
+                self.dismiss(animated: false)
+                self.updateDataSource(repositories: [])
+                self.searchBar.text = ""
+            })
+        )
+        errorMessageUIHostingController.modalPresentationStyle = .overFullScreen
+        errorMessageUIHostingController.view.backgroundColor = .clear
+        self.present(errorMessageUIHostingController, animated: false)
+    }
 }
 
 // MARK: - UICollectionView
