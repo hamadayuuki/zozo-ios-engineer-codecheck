@@ -38,7 +38,6 @@ final class RepositoryDetailViewModel: RepositoryDetailViewModelProtocol {
             let result: Result<RepositoryDetailResponse, HTTPError> = try await apiClient.request(apiRequest: request)
             switch result {
             case .success(let response):
-                print(response)
                 var newResponse = response
                 newResponse.updatedAt = newResponse.updatedAt.formatDateString()   // TODO: Translator実装
                 repositoryDetail = newResponse

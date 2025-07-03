@@ -38,6 +38,7 @@
 		49CD8F5D2C2E83FE00E78E9E /* SearchRepositoriesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CD8F5C2C2E83FE00E78E9E /* SearchRepositoriesResponse.swift */; };
 		49CD8F662C36A06B00E78E9E /* RepositoryViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CD8F652C36A06B00E78E9E /* RepositoryViewCell.swift */; };
 		49D34A122E02B3C400563078 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D34A112E02B3C400563078 /* ErrorMessage.swift */; };
+		49D36C952E12A9FC00563078 /* StarredRepositoryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D36C942E12A9FC00563078 /* StarredRepositoryRequest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +92,7 @@
 		49CD8F5C2C2E83FE00E78E9E /* SearchRepositoriesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepositoriesResponse.swift; sourceTree = "<group>"; };
 		49CD8F652C36A06B00E78E9E /* RepositoryViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryViewCell.swift; sourceTree = "<group>"; };
 		49D34A112E02B3C400563078 /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
+		49D36C942E12A9FC00563078 /* StarredRepositoryRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarredRepositoryRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -245,6 +247,7 @@
 				49CD8F5A2C2E83CC00E78E9E /* SearchRepositoriesRequest.swift */,
 				4934685A2DCB45BC001B6A95 /* RepositoryDetailRequest.swift */,
 				49C600AA2DE47DAB003052A4 /* AddStarToRepositoryRequest.swift */,
+				49D36C942E12A9FC00563078 /* StarredRepositoryRequest.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -450,6 +453,7 @@
 				49111BF02C251938009D66F8 /* AppDelegate.swift in Sources */,
 				4934685D2DCB48E5001B6A95 /* RepositoryDetailResponse.swift in Sources */,
 				49CD8F532C2E4BF100E78E9E /* HTTPMethod.swift in Sources */,
+				49D36C952E12A9FC00563078 /* StarredRepositoryRequest.swift in Sources */,
 				49C600AD2DE487A3003052A4 /* GitHubAPIConfig.swift in Sources */,
 				49CD8F552C2E4C4F00E78E9E /* APIRequestProtocol.swift in Sources */,
 				49C600AB2DE47DAB003052A4 /* AddStarToRepositoryRequest.swift in Sources */,

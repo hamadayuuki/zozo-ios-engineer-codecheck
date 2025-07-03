@@ -10,19 +10,23 @@ import Foundation
 // MARK: - Protocol
 
 // アクセスレベルは他のファイルから呼び出せるように設定
+@MainActor
 protocol SearchRepositoryViewModelInput {
     func searchButtonTapped(searchWord: String) async throws
     func starButtonTapped(tappedCellIndex: Int) async
 }
 
+@MainActor
 protocol SearchRepositoryViewModelOutput {
     var state: SearchRepositoryViewModel.State { get }
 }
 
+@MainActor
 protocol SearchRepositoryViewModelProtocol: SearchRepositoryViewModelInput, SearchRepositoryViewModelOutput {}
 
 // MARK: - ViewModel
 
+@MainActor
 final class SearchRepositoryViewModel: SearchRepositoryViewModelProtocol {
     enum State: Equatable {
         case initial   // init だと競合
@@ -43,7 +47,6 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelProtocol {
 
     // MARK: - inputs
 
-    @MainActor
     func searchButtonTapped(searchWord: String) async throws {
         state = .initial
         state = .loading
@@ -52,7 +55,25 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelProtocol {
             let response: Result<SearchRepositoriesResponse, HTTPError> = try await apiClient.request(apiRequest: searchRepoRequest)
             switch response {
             case .success(let repositories):
-                let repositories: Repositories = SearchRepositoryTranslator.translate(input: repositories)
+                var repositories: Repositories = SearchRepositoryTranslator.translate(input: repositories)
+                try await withThrowingTaskGroup(of: (Int, Bool).self) { group in
+                    for (index, repo) in repositories.items.enumerated() {
+                        group.addTask {
+                            let starredRepositoryRequest: StarredRepositoryRequest = .init(owner: repo.owner.login, repo: repo.name)
+                            let isStarredRepository: Result<EmptyResponse, HTTPError> = try await self.apiClient.request(apiRequest: starredRepositoryRequest)
+                            switch isStarredRepository {
+                            case .success:
+                                return (index, true)
+                            case .failure:
+                                return (index, false)
+                            }
+                        }
+                    }
+                    for try await (index, starred) in group {
+                        repositories.items[index].isStarred = starred
+                    }
+                }
+
                 state = .success(repositories)
             case .failure(let error):
                 let errorDescription = error.errorDescription
@@ -64,7 +85,6 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelProtocol {
         }
     }
 
-    @MainActor
     func starButtonTapped(tappedCellIndex: Int) async {
         switch state {
         case .success(var repositories):

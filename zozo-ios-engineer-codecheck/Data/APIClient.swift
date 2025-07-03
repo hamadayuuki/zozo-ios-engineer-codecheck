@@ -39,7 +39,7 @@ final class APIClient: APIClientProtocol {
 
         switch httpStatus.statusCode {
         case 200..<300:
-            // PUT or DELETE 通信の場合
+            // レスポンスが空（PUT or DELETE 通信）の場合
             if httpStatus.statusCode == 204 && D.self == EmptyResponse.self {
                 return .success(EmptyResponse() as! D)
             }
