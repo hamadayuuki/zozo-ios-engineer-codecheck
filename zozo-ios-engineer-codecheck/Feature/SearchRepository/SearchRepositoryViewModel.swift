@@ -88,23 +88,40 @@ final class SearchRepositoryViewModel: SearchRepositoryViewModelProtocol {
     func starButtonTapped(tappedCellIndex: Int) async {
         switch state {
         case .success(var repositories):
-            let addStarToRepositoryRequest: AddStarToRepositoryRequest = .init(owner: repositories.items[tappedCellIndex].owner.login, repo: repositories.items[tappedCellIndex].name)
-            do {
-                let response: Result<EmptyResponse, HTTPError> = try await apiClient.request(apiRequest: addStarToRepositoryRequest)
-                switch response {
-                case .success(_):
-                    // TODO: スター解除機能を実装したら、リファクタリング検討する
-                    if !repositories.items[tappedCellIndex].isStarred {
+            if !repositories.items[tappedCellIndex].isStarred {
+                // リポジトリにスターを付与
+                let addStarToRepositoryRequest: AddStarToRepositoryRequest = .init(owner: repositories.items[tappedCellIndex].owner.login, repo: repositories.items[tappedCellIndex].name)
+                do {
+                    let response: Result<EmptyResponse, HTTPError> = try await apiClient.request(apiRequest: addStarToRepositoryRequest)
+                    switch response {
+                    case .success(_):
                         repositories.items[tappedCellIndex].stargazersCount += 1
                         repositories.items[tappedCellIndex].isStarred = true
+                        state = .success(repositories)
+                    case .failure(let error):
+                        let errorMessage: ErrorMessage = .init(title: "\(error.title)", description: error.errorDescription)
+                        state = .error(errorMessage)
                     }
-                    state = .success(repositories)
-                case .failure(let error):
-                    let errorMessage: ErrorMessage = .init(title: "\(error.title)", description: error.errorDescription)
-                    state = .error(errorMessage)
+                } catch {
+                    state = .error(.init(title: HTTPError.unknownError.title, description: HTTPError.unknownError.errorDescription))
                 }
-            } catch {
-                state = .error(.init(title: HTTPError.unknownError.title, description: HTTPError.unknownError.errorDescription))
+            } else {
+                // リポジトリからスターを削除
+                let removeStarFromRepositoryRequest: RemoveStarFromRepositoryRequest = .init(owner: repositories.items[tappedCellIndex].owner.login, repo: repositories.items[tappedCellIndex].name)
+                do {
+                    let response: Result<EmptyResponse, HTTPError> = try await apiClient.request(apiRequest: removeStarFromRepositoryRequest)
+                    switch response {
+                    case .success(_):
+                        repositories.items[tappedCellIndex].stargazersCount -= 1
+                        repositories.items[tappedCellIndex].isStarred = false
+                        state = .success(repositories)
+                    case .failure(let error):
+                        let errorMessage: ErrorMessage = .init(title: "\(error.title)", description: error.errorDescription)
+                        state = .error(errorMessage)
+                    }
+                } catch {
+                    state = .error(.init(title: HTTPError.unknownError.title, description: HTTPError.unknownError.errorDescription))
+                }
             }
         case .initial, .loading, .error:
             print("")

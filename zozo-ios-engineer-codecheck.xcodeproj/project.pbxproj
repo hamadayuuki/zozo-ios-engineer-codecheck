@@ -39,6 +39,7 @@
 		49CD8F662C36A06B00E78E9E /* RepositoryViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CD8F652C36A06B00E78E9E /* RepositoryViewCell.swift */; };
 		49D34A122E02B3C400563078 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D34A112E02B3C400563078 /* ErrorMessage.swift */; };
 		49D36C952E12A9FC00563078 /* StarredRepositoryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D36C942E12A9FC00563078 /* StarredRepositoryRequest.swift */; };
+		49D37DC52E14F5BB00563078 /* RemoveStarFromRepositoryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D37DC42E14F5BB00563078 /* RemoveStarFromRepositoryRequest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +94,7 @@
 		49CD8F652C36A06B00E78E9E /* RepositoryViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryViewCell.swift; sourceTree = "<group>"; };
 		49D34A112E02B3C400563078 /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
 		49D36C942E12A9FC00563078 /* StarredRepositoryRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarredRepositoryRequest.swift; sourceTree = "<group>"; };
+		49D37DC42E14F5BB00563078 /* RemoveStarFromRepositoryRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveStarFromRepositoryRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -247,6 +249,7 @@
 				49CD8F5A2C2E83CC00E78E9E /* SearchRepositoriesRequest.swift */,
 				4934685A2DCB45BC001B6A95 /* RepositoryDetailRequest.swift */,
 				49C600AA2DE47DAB003052A4 /* AddStarToRepositoryRequest.swift */,
+				49D37DC42E14F5BB00563078 /* RemoveStarFromRepositoryRequest.swift */,
 				49D36C942E12A9FC00563078 /* StarredRepositoryRequest.swift */,
 			);
 			path = Request;
@@ -445,6 +448,7 @@
 				4984406C2DDDA98400AFB21A /* WireframeProtocol.swift in Sources */,
 				49CD8F5B2C2E83CC00E78E9E /* SearchRepositoriesRequest.swift in Sources */,
 				49CD8F572C2E573700E78E9E /* APIClient.swift in Sources */,
+				49D37DC52E14F5BB00563078 /* RemoveStarFromRepositoryRequest.swift in Sources */,
 				49CD8F592C2E581500E78E9E /* HTTPError.swift in Sources */,
 				498440702DDDAAF900AFB21A /* SearchRepositoryWireframe.swift in Sources */,
 				49CD8F5D2C2E83FE00E78E9E /* SearchRepositoriesResponse.swift in Sources */,
