@@ -34,6 +34,9 @@ extension APIRequestProtocol {
             if let urlQueryItem = urlQueryItem {
                 components?.queryItems = [urlQueryItem]
             }
+            headers.forEach { key, value in
+                urlRequest.addValue(value, forHTTPHeaderField: key)
+            }
             urlRequest.url = components?.url
             return urlRequest
         case .post:
